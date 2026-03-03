@@ -1,5 +1,9 @@
 # MrHammadClaw
 
+<p align="center">
+  <img src="docs/assets/mrhammadclaw-hero.png" alt="MrHammadClaw" width="600">
+</p>
+
 **A personal AI gateway that spawns Claude Code as a subprocess — no OAuth token extraction, no TOS violations.**
 
 <p align="center">
