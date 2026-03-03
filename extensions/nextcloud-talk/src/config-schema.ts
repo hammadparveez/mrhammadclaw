@@ -7,7 +7,7 @@ import {
   ReplyRuntimeConfigSchemaShape,
   ToolPolicySchema,
   requireOpenAllowFrom,
-} from "openclaw/plugin-sdk";
+} from "mrhammadclaw/plugin-sdk";
 import { z } from "zod";
 
 export const NextcloudTalkRoomSchema = z

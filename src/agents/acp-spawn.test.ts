@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { MrHammadClawConfig } from "../config/config.js";
 import type { SessionBindingRecord } from "../infra/outbound/session-binding-service.js";
 
 const hoisted = vi.hoisted(() => {
@@ -30,7 +30,7 @@ const hoisted = vi.hoisted(() => {
           },
         },
       },
-    } as OpenClawConfig,
+    } as MrHammadClawConfig,
   };
   return {
     callGatewayMock,
@@ -126,7 +126,7 @@ describe("spawnAcpDirect", () => {
           },
         },
       },
-    } satisfies OpenClawConfig;
+    } satisfies MrHammadClawConfig;
 
     hoisted.callGatewayMock.mockReset().mockImplementation(async (argsUnknown: unknown) => {
       const args = argsUnknown as { method?: string };

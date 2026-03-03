@@ -80,9 +80,9 @@ const originForPort = (port: number) => `http://127.0.0.1:${port}`;
 
 function restoreGatewayToken(prevToken: string | undefined) {
   if (prevToken === undefined) {
-    delete process.env.OPENCLAW_GATEWAY_TOKEN;
+    delete process.env.MRHAMMADCLAW_GATEWAY_TOKEN;
   } else {
-    process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+    process.env.MRHAMMADCLAW_GATEWAY_TOKEN = prevToken;
   }
 }
 
@@ -182,7 +182,7 @@ function resolveGatewayTokenOrEnv(): string {
   const token =
     typeof (testState.gatewayAuth as { token?: unknown } | undefined)?.token === "string"
       ? ((testState.gatewayAuth as { token?: string }).token ?? undefined)
-      : process.env.OPENCLAW_GATEWAY_TOKEN;
+      : process.env.MRHAMMADCLAW_GATEWAY_TOKEN;
   expect(typeof token).toBe("string");
   return String(token ?? "");
 }
@@ -271,7 +271,7 @@ async function startRateLimitedTokenServerWithPairedDeviceToken() {
   const { server, ws, port, prevToken } = await startServerWithClient();
   const deviceIdentityPath = path.join(
     os.tmpdir(),
-    `openclaw-auth-rate-limit-${Date.now()}-${Math.random().toString(36).slice(2)}.json`,
+    `mrhammadclaw-auth-rate-limit-${Date.now()}-${Math.random().toString(36).slice(2)}.json`,
   );
   try {
     const initial = await connectReq(ws, { token: "secret", deviceIdentityPath });
@@ -305,7 +305,7 @@ async function ensurePairedDeviceTokenForCurrentIdentity(ws: WebSocket): Promise
 
   const deviceIdentityPath = path.join(
     os.tmpdir(),
-    `openclaw-auth-device-${Date.now()}-${Math.random().toString(36).slice(2)}.json`,
+    `mrhammadclaw-auth-device-${Date.now()}-${Math.random().toString(36).slice(2)}.json`,
   );
 
   const res = await connectReq(ws, { token: "secret", deviceIdentityPath });
@@ -341,8 +341,8 @@ describe("gateway server auth/connect", () => {
 
     test("closes silent handshakes after timeout", async () => {
       vi.useRealTimers();
-      const prevHandshakeTimeout = process.env.OPENCLAW_TEST_HANDSHAKE_TIMEOUT_MS;
-      process.env.OPENCLAW_TEST_HANDSHAKE_TIMEOUT_MS = "20";
+      const prevHandshakeTimeout = process.env.MRHAMMADCLAW_TEST_HANDSHAKE_TIMEOUT_MS;
+      process.env.MRHAMMADCLAW_TEST_HANDSHAKE_TIMEOUT_MS = "20";
       try {
         const ws = await openWs(port);
         const handshakeTimeoutMs = getHandshakeTimeoutMs();
@@ -350,9 +350,9 @@ describe("gateway server auth/connect", () => {
         expect(closed).toBe(true);
       } finally {
         if (prevHandshakeTimeout === undefined) {
-          delete process.env.OPENCLAW_TEST_HANDSHAKE_TIMEOUT_MS;
+          delete process.env.MRHAMMADCLAW_TEST_HANDSHAKE_TIMEOUT_MS;
         } else {
-          process.env.OPENCLAW_TEST_HANDSHAKE_TIMEOUT_MS = prevHandshakeTimeout;
+          process.env.MRHAMMADCLAW_TEST_HANDSHAKE_TIMEOUT_MS = prevHandshakeTimeout;
         }
       }
     });
@@ -380,24 +380,24 @@ describe("gateway server auth/connect", () => {
       for (const testCase of [
         {
           env: {
-            OPENCLAW_VERSION: " ",
-            OPENCLAW_SERVICE_VERSION: "2.4.6-service",
+            MRHAMMADCLAW_VERSION: " ",
+            MRHAMMADCLAW_SERVICE_VERSION: "2.4.6-service",
             npm_package_version: "1.0.0-package",
           },
           expectedVersion: "2.4.6-service",
         },
         {
           env: {
-            OPENCLAW_VERSION: "9.9.9-cli",
-            OPENCLAW_SERVICE_VERSION: "2.4.6-service",
+            MRHAMMADCLAW_VERSION: "9.9.9-cli",
+            MRHAMMADCLAW_SERVICE_VERSION: "2.4.6-service",
             npm_package_version: "1.0.0-package",
           },
           expectedVersion: "9.9.9-cli",
         },
         {
           env: {
-            OPENCLAW_VERSION: " ",
-            OPENCLAW_SERVICE_VERSION: "\t",
+            MRHAMMADCLAW_VERSION: " ",
+            MRHAMMADCLAW_SERVICE_VERSION: "\t",
             npm_package_version: "1.0.0-package",
           },
           expectedVersion: "1.0.0-package",
@@ -494,7 +494,7 @@ describe("gateway server auth/connect", () => {
         scopes: [],
         clientId: GATEWAY_CLIENT_NAMES.TEST,
         clientMode: GATEWAY_CLIENT_MODES.TEST,
-        identityPath: path.join(os.tmpdir(), `openclaw-test-device-${randomUUID()}.json`),
+        identityPath: path.join(os.tmpdir(), `mrhammadclaw-test-device-${randomUUID()}.json`),
         nonce,
       });
 
@@ -695,8 +695,8 @@ describe("gateway server auth/connect", () => {
     let prevToken: string | undefined;
 
     beforeAll(async () => {
-      prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-      process.env.OPENCLAW_GATEWAY_TOKEN = "secret";
+      prevToken = process.env.MRHAMMADCLAW_GATEWAY_TOKEN;
+      process.env.MRHAMMADCLAW_GATEWAY_TOKEN = "secret";
       port = await getFreePort();
       server = await startGatewayServer(port);
     });
@@ -704,9 +704,9 @@ describe("gateway server auth/connect", () => {
     afterAll(async () => {
       await server.close();
       if (prevToken === undefined) {
-        delete process.env.OPENCLAW_GATEWAY_TOKEN;
+        delete process.env.MRHAMMADCLAW_GATEWAY_TOKEN;
       } else {
-        process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+        process.env.MRHAMMADCLAW_GATEWAY_TOKEN = prevToken;
       }
     });
 
@@ -755,8 +755,8 @@ describe("gateway server auth/connect", () => {
     let prevToken: string | undefined;
 
     beforeAll(async () => {
-      prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-      delete process.env.OPENCLAW_GATEWAY_TOKEN;
+      prevToken = process.env.MRHAMMADCLAW_GATEWAY_TOKEN;
+      delete process.env.MRHAMMADCLAW_GATEWAY_TOKEN;
       testState.gatewayAuth = { mode: "none" };
       port = await getFreePort();
       server = await startGatewayServer(port);
@@ -765,9 +765,9 @@ describe("gateway server auth/connect", () => {
     afterAll(async () => {
       await server.close();
       if (prevToken === undefined) {
-        delete process.env.OPENCLAW_GATEWAY_TOKEN;
+        delete process.env.MRHAMMADCLAW_GATEWAY_TOKEN;
       } else {
-        process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+        process.env.MRHAMMADCLAW_GATEWAY_TOKEN = prevToken;
       }
     });
 
@@ -963,8 +963,8 @@ describe("gateway server auth/connect", () => {
       },
       // oxlint-disable-next-line typescript/no-explicit-any
     } as any);
-    const prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-    process.env.OPENCLAW_GATEWAY_TOKEN = "secret";
+    const prevToken = process.env.MRHAMMADCLAW_GATEWAY_TOKEN;
+    process.env.MRHAMMADCLAW_GATEWAY_TOKEN = "secret";
     try {
       await withGatewayServer(async ({ port }) => {
         const ws = new WebSocket(`ws://127.0.0.1:${port}`, {
@@ -997,7 +997,10 @@ describe("gateway server auth/connect", () => {
           scopes,
           clientId: GATEWAY_CLIENT_NAMES.CONTROL_UI,
           clientMode: GATEWAY_CLIENT_MODES.WEBCHAT,
-          identityPath: path.join(os.tmpdir(), `openclaw-controlui-device-${randomUUID()}.json`),
+          identityPath: path.join(
+            os.tmpdir(),
+            `mrhammadclaw-controlui-device-${randomUUID()}.json`,
+          ),
           nonce: String(nonce),
         });
         const res = await connectReq(ws, {
@@ -1023,8 +1026,8 @@ describe("gateway server auth/connect", () => {
   test("allows control ui with stale device identity when device auth is disabled", async () => {
     testState.gatewayControlUi = { dangerouslyDisableDeviceAuth: true };
     testState.gatewayAuth = { mode: "token", token: "secret" };
-    const prevToken = process.env.OPENCLAW_GATEWAY_TOKEN;
-    process.env.OPENCLAW_GATEWAY_TOKEN = "secret";
+    const prevToken = process.env.MRHAMMADCLAW_GATEWAY_TOKEN;
+    process.env.MRHAMMADCLAW_GATEWAY_TOKEN = "secret";
     try {
       await withGatewayServer(async ({ port }) => {
         const ws = await openWs(port, { origin: originForPort(port) });
@@ -1209,7 +1212,7 @@ describe("gateway server auth/connect", () => {
       await import("../infra/device-identity.js");
     const { getPairedDevice, listDevicePairing } = await import("../infra/device-pairing.js");
     const { server, ws, port, prevToken } = await startServerWithClient("secret");
-    const identityDir = await mkdtemp(join(tmpdir(), "openclaw-device-scope-"));
+    const identityDir = await mkdtemp(join(tmpdir(), "mrhammadclaw-device-scope-"));
     const identity = loadOrCreateDeviceIdentity(join(identityDir, "device.json"));
     const client = {
       id: GATEWAY_CLIENT_NAMES.TEST,
@@ -1293,7 +1296,7 @@ describe("gateway server auth/connect", () => {
     const { approveDevicePairing, getPairedDevice, listDevicePairing, requestDevicePairing } =
       await import("../infra/device-pairing.js");
     const { server, ws, port, prevToken } = await startServerWithClient("secret");
-    const identityDir = await mkdtemp(join(tmpdir(), "openclaw-device-token-scope-"));
+    const identityDir = await mkdtemp(join(tmpdir(), "mrhammadclaw-device-token-scope-"));
     const identity = loadOrCreateDeviceIdentity(join(identityDir, "device.json"));
     const devicePublicKey = publicKeyRawBase64UrlFromPem(identity.publicKeyPem);
     const buildDevice = (scopes: string[], nonce: string) => {
@@ -1359,7 +1362,7 @@ describe("gateway server auth/connect", () => {
       await import("../infra/device-pairing.js");
     const { server, ws, port, prevToken } = await startServerWithClient("secret");
     ws.close();
-    const identityDir = await mkdtemp(join(tmpdir(), "openclaw-device-scope-"));
+    const identityDir = await mkdtemp(join(tmpdir(), "mrhammadclaw-device-scope-"));
     const identity = loadOrCreateDeviceIdentity(join(identityDir, "device.json"));
     const client = {
       id: GATEWAY_CLIENT_NAMES.TEST,
@@ -1456,7 +1459,7 @@ describe("gateway server auth/connect", () => {
       await import("../infra/device-identity.js");
     const { listDevicePairing } = await import("../infra/device-pairing.js");
     const { server, ws, port, prevToken } = await startServerWithClient("secret");
-    const identityDir = await mkdtemp(join(tmpdir(), "openclaw-device-scope-"));
+    const identityDir = await mkdtemp(join(tmpdir(), "mrhammadclaw-device-scope-"));
     const identity = loadOrCreateDeviceIdentity(join(identityDir, "device.json"));
     const client = {
       id: GATEWAY_CLIENT_NAMES.TEST,
@@ -1527,7 +1530,7 @@ describe("gateway server auth/connect", () => {
     const { writeJsonAtomic } = await import("../infra/json-files.js");
     const { approveDevicePairing, getPairedDevice, listDevicePairing, requestDevicePairing } =
       await import("../infra/device-pairing.js");
-    const identityDir = await mkdtemp(join(tmpdir(), "openclaw-device-legacy-meta-"));
+    const identityDir = await mkdtemp(join(tmpdir(), "mrhammadclaw-device-legacy-meta-"));
     const identity = loadOrCreateDeviceIdentity(join(identityDir, "device.json"));
     const deviceId = identity.deviceId;
     const publicKey = publicKeyRawBase64UrlFromPem(identity.publicKeyPem);
@@ -1615,7 +1618,7 @@ describe("gateway server auth/connect", () => {
       await import("../infra/device-pairing.js");
     const { GATEWAY_CLIENT_MODES, GATEWAY_CLIENT_NAMES } =
       await import("../utils/message-channel.js");
-    const identityDir = await mkdtemp(join(tmpdir(), "openclaw-device-legacy-"));
+    const identityDir = await mkdtemp(join(tmpdir(), "mrhammadclaw-device-legacy-"));
     const identity = loadOrCreateDeviceIdentity(join(identityDir, "device.json"));
     const devicePublicKey = publicKeyRawBase64UrlFromPem(identity.publicKeyPem);
     const seeded = await requestDevicePairing({
@@ -1723,9 +1726,9 @@ describe("gateway server auth/connect", () => {
     ws2.close();
     await server.close();
     if (prevToken === undefined) {
-      delete process.env.OPENCLAW_GATEWAY_TOKEN;
+      delete process.env.MRHAMMADCLAW_GATEWAY_TOKEN;
     } else {
-      process.env.OPENCLAW_GATEWAY_TOKEN = prevToken;
+      process.env.MRHAMMADCLAW_GATEWAY_TOKEN = prevToken;
     }
   });
 

@@ -1,4 +1,4 @@
-import type { AcpRuntime, OpenClawPluginServiceContext } from "openclaw/plugin-sdk";
+import type { AcpRuntime, MrHammadClawPluginServiceContext } from "mrhammadclaw/plugin-sdk";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AcpRuntimeError } from "../../../src/acp/runtime/errors.js";
 import {
@@ -54,8 +54,8 @@ function createRuntimeStub(healthy: boolean): {
 }
 
 function createServiceContext(
-  overrides: Partial<OpenClawPluginServiceContext> = {},
-): OpenClawPluginServiceContext {
+  overrides: Partial<MrHammadClawPluginServiceContext> = {},
+): MrHammadClawPluginServiceContext {
   return {
     config: {},
     workspaceDir: "/tmp/workspace",

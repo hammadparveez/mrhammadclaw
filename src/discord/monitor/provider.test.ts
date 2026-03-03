@@ -1,6 +1,6 @@
 import { EventEmitter } from "node:events";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MrHammadClawConfig } from "../../config/config.js";
 import type { RuntimeEnv } from "../../runtime.js";
 
 const {
@@ -248,7 +248,7 @@ describe("monitorDiscordProvider", () => {
     };
   };
 
-  const baseConfig = (): OpenClawConfig =>
+  const baseConfig = (): MrHammadClawConfig =>
     ({
       channels: {
         discord: {
@@ -257,7 +257,7 @@ describe("monitorDiscordProvider", () => {
           },
         },
       },
-    }) as OpenClawConfig;
+    }) as MrHammadClawConfig;
 
   beforeEach(() => {
     clientFetchUserMock.mockClear().mockResolvedValue({ id: "bot-1" });

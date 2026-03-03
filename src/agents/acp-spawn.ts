@@ -21,7 +21,7 @@ import {
   resolveThreadBindingSpawnPolicy,
 } from "../channels/thread-bindings-policy.js";
 import { loadConfig } from "../config/config.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { MrHammadClawConfig } from "../config/config.js";
 import { callGateway } from "../gateway/call.js";
 import { resolveConversationIdFromTargets } from "../infra/outbound/conversation-id.js";
 import {
@@ -89,7 +89,7 @@ function resolveAcpSessionMode(mode: SpawnAcpMode): AcpRuntimeSessionMode {
 
 function resolveTargetAcpAgentId(params: {
   requestedAgentId?: string;
-  cfg: OpenClawConfig;
+  cfg: MrHammadClawConfig;
 }): { ok: true; agentId: string } | { ok: false; error: string } {
   const requested = normalizeOptionalAgentId(params.requestedAgentId);
   if (requested) {
@@ -137,7 +137,7 @@ function resolveConversationIdForThreadBinding(params: {
 }
 
 function prepareAcpThreadBinding(params: {
-  cfg: OpenClawConfig;
+  cfg: MrHammadClawConfig;
   channel?: string;
   accountId?: string;
   to?: string;

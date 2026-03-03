@@ -11,7 +11,7 @@ import {
   formatAllowlistMatchMeta,
   resolveEffectiveAllowFromLists,
   type HistoryEntry,
-} from "openclaw/plugin-sdk";
+} from "mrhammadclaw/plugin-sdk";
 import {
   buildMSTeamsAttachmentPlaceholder,
   buildMSTeamsMediaPayload,

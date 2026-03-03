@@ -1,9 +1,9 @@
 {
-  "name": "@openclaw/discord",
+  "name": "@mrhammadclaw/discord",
   "version": "2026.2.26",
-  "description": "OpenClaw Discord channel plugin",
+  "description": "MrHammadClaw Discord channel plugin",
   "type": "module",
-  "openclaw": {
+  "mrhammadclaw": {
     "extensions": [
       "./index.ts"
     ]

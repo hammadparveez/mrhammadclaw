@@ -1,16 +1,16 @@
 import type {
   ChannelAccountSnapshot,
   ChannelGatewayContext,
-  OpenClawConfig,
+  MrHammadClawConfig,
   PluginRuntime,
   ResolvedTelegramAccount,
-} from "openclaw/plugin-sdk";
+} from "mrhammadclaw/plugin-sdk";
 import { describe, expect, it, vi } from "vitest";
 import { createRuntimeEnv } from "../../test-utils/runtime-env.js";
 import { telegramPlugin } from "./channel.js";
 import { setTelegramRuntime } from "./runtime.js";
 
-function createCfg(): OpenClawConfig {
+function createCfg(): MrHammadClawConfig {
   return {
     channels: {
       telegram: {
@@ -22,11 +22,11 @@ function createCfg(): OpenClawConfig {
         },
       },
     },
-  } as OpenClawConfig;
+  } as MrHammadClawConfig;
 }
 
 function createStartAccountCtx(params: {
-  cfg: OpenClawConfig;
+  cfg: MrHammadClawConfig;
   accountId: string;
   runtime: ReturnType<typeof createRuntimeEnv>;
 }): ChannelGatewayContext<ResolvedTelegramAccount> {

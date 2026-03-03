@@ -1,6 +1,6 @@
-# @openclaw/voice-call
+# @mrhammadclaw/voice-call
 
-Official Voice Call plugin for **OpenClaw**.
+Official Voice Call plugin for **MrHammadClaw**.
 
 Providers:
 
@@ -9,15 +9,15 @@ Providers:
 - **Plivo** (Voice API + XML transfer + GetInput speech)
 - **Mock** (dev/no network)
 
-Docs: `https://docs.openclaw.ai/plugins/voice-call`
-Plugin system: `https://docs.openclaw.ai/plugin`
+Docs: `https://docs.mrhammadclaw.ai/plugins/voice-call`
+Plugin system: `https://docs.mrhammadclaw.ai/plugin`
 
 ## Install (local dev)
 
-### Option A: install via OpenClaw (recommended)
+### Option A: install via MrHammadClaw (recommended)
 
 ```bash
-openclaw plugins install @openclaw/voice-call
+mrhammadclaw plugins install @mrhammadclaw/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -25,9 +25,9 @@ Restart the Gateway afterwards.
 ### Option B: copy into your global extensions folder (dev)
 
 ```bash
-mkdir -p ~/.openclaw/extensions
-cp -R extensions/voice-call ~/.openclaw/extensions/voice-call
-cd ~/.openclaw/extensions/voice-call && pnpm install
+mkdir -p ~/.mrhammadclaw/extensions
+cp -R extensions/voice-call ~/.mrhammadclaw/extensions/voice-call
+cd ~/.mrhammadclaw/extensions/voice-call && pnpm install
 ```
 
 ## Config
@@ -143,13 +143,13 @@ Notes:
 ## CLI
 
 ```bash
-openclaw voicecall call --to "+15555550123" --message "Hello from OpenClaw"
-openclaw voicecall continue --call-id <id> --message "Any questions?"
-openclaw voicecall speak --call-id <id> --message "One moment"
-openclaw voicecall end --call-id <id>
-openclaw voicecall status --call-id <id>
-openclaw voicecall tail
-openclaw voicecall expose --mode funnel
+mrhammadclaw voicecall call --to "+15555550123" --message "Hello from MrHammadClaw"
+mrhammadclaw voicecall continue --call-id <id> --message "Any questions?"
+mrhammadclaw voicecall speak --call-id <id> --message "One moment"
+mrhammadclaw voicecall end --call-id <id>
+mrhammadclaw voicecall status --call-id <id>
+mrhammadclaw voicecall tail
+mrhammadclaw voicecall expose --mode funnel
 ```
 
 ## Tool

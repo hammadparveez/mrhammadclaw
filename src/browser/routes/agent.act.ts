@@ -254,7 +254,7 @@ export function registerBrowserAgentActRoutes(
                 403,
                 [
                   "wait --fn is disabled by config (browser.evaluateEnabled=false).",
-                  "Docs: /gateway/configuration#browser-openclaw-managed-browser",
+                  "Docs: /gateway/configuration#browser-mrhammadclaw-managed-browser",
                 ].join("\n"),
               );
             }
@@ -294,7 +294,7 @@ export function registerBrowserAgentActRoutes(
                 403,
                 [
                   "act:evaluate is disabled by config (browser.evaluateEnabled=false).",
-                  "Docs: /gateway/configuration#browser-openclaw-managed-browser",
+                  "Docs: /gateway/configuration#browser-mrhammadclaw-managed-browser",
                 ].join("\n"),
               );
             }

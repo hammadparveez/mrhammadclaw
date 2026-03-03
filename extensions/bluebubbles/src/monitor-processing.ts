@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk";
+import type { MrHammadClawConfig } from "mrhammadclaw/plugin-sdk";
 import {
   createReplyPrefixOptions,
   evictOldHistoryKeys,
@@ -11,7 +11,7 @@ import {
   resolveControlCommandGate,
   stripMarkdown,
   type HistoryEntry,
-} from "openclaw/plugin-sdk";
+} from "mrhammadclaw/plugin-sdk";
 import { downloadBlueBubblesAttachment } from "./attachments.js";
 import { markBlueBubblesChatRead, sendBlueBubblesTyping } from "./chat.js";
 import { fetchBlueBubblesHistory } from "./history.js";
@@ -216,7 +216,7 @@ function logGroupAllowlistHint(params: {
 }
 
 function resolveBlueBubblesAckReaction(params: {
-  cfg: OpenClawConfig;
+  cfg: MrHammadClawConfig;
   agentId: string;
   core: BlueBubblesCoreRuntime;
   runtime: BlueBubblesRuntimeEnv;

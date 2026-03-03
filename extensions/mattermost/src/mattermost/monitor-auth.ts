@@ -1,4 +1,7 @@
-import { resolveAllowlistMatchSimple, resolveEffectiveAllowFromLists } from "openclaw/plugin-sdk";
+import {
+  resolveAllowlistMatchSimple,
+  resolveEffectiveAllowFromLists,
+} from "mrhammadclaw/plugin-sdk";
 
 export function normalizeMattermostAllowEntry(entry: string): string {
   const trimmed = entry.trim();

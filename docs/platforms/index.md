@@ -8,7 +8,7 @@ title: "Platforms"
 
 # Platforms
 
-OpenClaw core is written in TypeScript. **Node is the recommended runtime**.
+MrHammadClaw core is written in TypeScript. **Node is the recommended runtime**.
 Bun is not recommended for the Gateway (WhatsApp/Telegram bugs).
 
 Companion apps exist for macOS (menu bar app) and mobile nodes (iOS/Android). Windows and
@@ -36,18 +36,18 @@ Native companion apps for Windows are also planned; the Gateway is recommended v
 - Install guide: [Getting Started](/start/getting-started)
 - Gateway runbook: [Gateway](/gateway)
 - Gateway configuration: [Configuration](/gateway/configuration)
-- Service status: `openclaw gateway status`
+- Service status: `mrhammadclaw gateway status`
 
 ## Gateway service install (CLI)
 
 Use one of these (all supported):
 
-- Wizard (recommended): `openclaw onboard --install-daemon`
-- Direct: `openclaw gateway install`
-- Configure flow: `openclaw configure` → select **Gateway service**
-- Repair/migrate: `openclaw doctor` (offers to install or fix the service)
+- Wizard (recommended): `mrhammadclaw onboard --install-daemon`
+- Direct: `mrhammadclaw gateway install`
+- Configure flow: `mrhammadclaw configure` → select **Gateway service**
+- Repair/migrate: `mrhammadclaw doctor` (offers to install or fix the service)
 
 The service target depends on OS:
 
-- macOS: LaunchAgent (`ai.openclaw.gateway` or `ai.openclaw.<profile>`; legacy `com.openclaw.*`)
-- Linux/WSL2: systemd user service (`openclaw-gateway[-<profile>].service`)
+- macOS: LaunchAgent (`ai.mrhammadclaw.gateway` or `ai.mrhammadclaw.<profile>`; legacy `com.mrhammadclaw.*`)
+- Linux/WSL2: systemd user service (`mrhammadclaw-gateway[-<profile>].service`)

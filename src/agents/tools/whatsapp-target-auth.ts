@@ -1,10 +1,10 @@
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MrHammadClawConfig } from "../../config/config.js";
 import { resolveWhatsAppAccount } from "../../web/accounts.js";
 import { resolveWhatsAppOutboundTarget } from "../../whatsapp/resolve-outbound-target.js";
 import { ToolAuthorizationError } from "./common.js";
 
 export function resolveAuthorizedWhatsAppOutboundTarget(params: {
-  cfg: OpenClawConfig;
+  cfg: MrHammadClawConfig;
   chatJid: string;
   accountId?: string;
   actionLabel: string;

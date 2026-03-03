@@ -1,18 +1,18 @@
 import type {
   AnyAgentTool,
-  OpenClawPluginApi,
-  OpenClawPluginToolFactory,
+  MrHammadClawPluginApi,
+  MrHammadClawPluginToolFactory,
 } from "../../src/plugins/types.js";
 import { createLobsterTool } from "./src/lobster-tool.js";
 
-export default function register(api: OpenClawPluginApi) {
+export default function register(api: MrHammadClawPluginApi) {
   api.registerTool(
     ((ctx) => {
       if (ctx.sandboxed) {
         return null;
       }
       return createLobsterTool(api) as AnyAgentTool;
-    }) as OpenClawPluginToolFactory,
+    }) as MrHammadClawPluginToolFactory,
     { optional: true },
   );
 }

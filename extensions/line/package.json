@@ -1,10 +1,10 @@
 {
-  "name": "@openclaw/line",
+  "name": "@mrhammadclaw/line",
   "version": "2026.2.26",
   "private": true,
-  "description": "OpenClaw LINE channel plugin",
+  "description": "MrHammadClaw LINE channel plugin",
   "type": "module",
-  "openclaw": {
+  "mrhammadclaw": {
     "extensions": [
       "./index.ts"
     ],
@@ -19,7 +19,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@openclaw/line",
+      "npmSpec": "@mrhammadclaw/line",
       "localPath": "extensions/line",
       "defaultChoice": "npm"
     }

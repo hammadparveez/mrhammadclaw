@@ -1,27 +1,27 @@
 <?xml version="1.0" standalone="yes"?>
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
-        <title>OpenClaw</title>
+        <title>MrHammadClaw</title>
         <item>
             <title>2026.2.14</title>
             <pubDate>Sun, 15 Feb 2026 04:24:34 +0100</pubDate>
-            <link>https://raw.githubusercontent.com/openclaw/openclaw/main/appcast.xml</link>
+            <link>https://raw.githubusercontent.com/mrhammadclaw/mrhammadclaw/main/appcast.xml</link>
             <sparkle:version>202602140</sparkle:version>
             <sparkle:shortVersionString>2026.2.14</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<h2>OpenClaw 2026.2.14</h2>
+            <description><![CDATA[<h2>MrHammadClaw 2026.2.14</h2>
 <h3>Changes</h3>
 <ul>
-<li>Telegram: add poll sending via <code>openclaw message poll</code> (duration seconds, silent delivery, anonymity controls). (#16209) Thanks @robbyczgw-cla.</li>
-<li>Slack/Discord: add <code>dmPolicy</code> + <code>allowFrom</code> config aliases for DM access control; legacy <code>dm.policy</code> + <code>dm.allowFrom</code> keys remain supported and <code>openclaw doctor --fix</code> can migrate them.</li>
+<li>Telegram: add poll sending via <code>mrhammadclaw message poll</code> (duration seconds, silent delivery, anonymity controls). (#16209) Thanks @robbyczgw-cla.</li>
+<li>Slack/Discord: add <code>dmPolicy</code> + <code>allowFrom</code> config aliases for DM access control; legacy <code>dm.policy</code> + <code>dm.allowFrom</code> keys remain supported and <code>mrhammadclaw doctor --fix</code> can migrate them.</li>
 <li>Discord: allow exec approval prompts to target channels or both DM+channel via <code>channels.discord.execApprovals.target</code>. (#16051) Thanks @leonnardo.</li>
 <li>Sandbox: add <code>sandbox.browser.binds</code> to configure browser-container bind mounts separately from exec containers. (#16230) Thanks @seheepeak.</li>
 <li>Discord: add debug logging for message routing decisions to improve <code>--debug</code> tracing. (#16202) Thanks @jayleekr.</li>
 </ul>
 <h3>Fixes</h3>
 <ul>
-<li>CLI/Plugins: ensure <code>openclaw message send</code> exits after successful delivery across plugin-backed channels so one-shot sends do not hang. (#16491) Thanks @yinghaosang.</li>
-<li>CLI/Plugins: run registered plugin <code>gateway_stop</code> hooks before <code>openclaw message</code> exits (success and failure paths), so plugin-backed channels can clean up one-shot CLI resources. (#16580) Thanks @gumadeiras.</li>
+<li>CLI/Plugins: ensure <code>mrhammadclaw message send</code> exits after successful delivery across plugin-backed channels so one-shot sends do not hang. (#16491) Thanks @yinghaosang.</li>
+<li>CLI/Plugins: run registered plugin <code>gateway_stop</code> hooks before <code>mrhammadclaw message</code> exits (success and failure paths), so plugin-backed channels can clean up one-shot CLI resources. (#16580) Thanks @gumadeiras.</li>
 <li>WhatsApp: honor per-account <code>dmPolicy</code> overrides (account-level settings now take precedence over channel defaults for inbound DMs). (#10082) Thanks @mcaxtr.</li>
 <li>Telegram: when <code>channels.telegram.commands.native</code> is <code>false</code>, exclude plugin commands from <code>setMyCommands</code> menu registration while keeping plugin slash handlers callable. (#15132) Thanks @Glucksberg.</li>
 <li>LINE: return 200 OK for Developers Console "Verify" requests (<code>{"events":[]}</code>) without <code>X-Line-Signature</code>, while still requiring signatures for real deliveries. (#16582) Thanks @arosstale.</li>
@@ -34,8 +34,8 @@
 <li>BlueBubbles: include sender identity in group chat envelopes and pass clean message text to the agent prompt, aligning with iMessage/Signal formatting. (#16210) Thanks @zerone0x.</li>
 <li>CLI: fix lazy core command registration so top-level maintenance commands (<code>doctor</code>, <code>dashboard</code>, <code>reset</code>, <code>uninstall</code>) resolve correctly instead of exposing a non-functional <code>maintenance</code> placeholder command.</li>
 <li>CLI/Dashboard: when <code>gateway.bind=lan</code>, generate localhost dashboard URLs to satisfy browser secure-context requirements while preserving non-LAN bind behavior. (#16434) Thanks @BinHPdev.</li>
-<li>TUI/Gateway: resolve local gateway target URL from <code>gateway.bind</code> mode (tailnet/lan) instead of hardcoded localhost so <code>openclaw tui</code> connects when gateway is non-loopback. (#16299) Thanks @cortexuvula.</li>
-<li>TUI: honor explicit <code>--session <key></code> in <code>openclaw tui</code> even when <code>session.scope</code> is <code>global</code>, so named sessions no longer collapse into shared global history. (#16575) Thanks @cinqu.</li>
+<li>TUI/Gateway: resolve local gateway target URL from <code>gateway.bind</code> mode (tailnet/lan) instead of hardcoded localhost so <code>mrhammadclaw tui</code> connects when gateway is non-loopback. (#16299) Thanks @cortexuvula.</li>
+<li>TUI: honor explicit <code>--session <key></code> in <code>mrhammadclaw tui</code> even when <code>session.scope</code> is <code>global</code>, so named sessions no longer collapse into shared global history. (#16575) Thanks @cinqu.</li>
 <li>TUI: use available terminal width for session name display in searchable select lists. (#16238) Thanks @robbyczgw-cla.</li>
 <li>TUI: refactor searchable select list description layout and add regression coverage for ANSI-highlight width bounds.</li>
 <li>TUI: preserve in-flight streaming replies when a different run finalizes concurrently (avoid clearing active run or reloading history mid-stream). (#10704) Thanks @axschr73.</li>
@@ -88,7 +88,7 @@
 <li>Outbound/Memory: bound directory cache growth with max-size eviction and proactive TTL pruning to prevent long-running gateways from accumulating unbounded directory entries. (#5140) Thanks @coygeek and @vignesh07.</li>
 <li>Skills/Memory: remove disconnected nodes from remote-skills cache to prevent stale node metadata from accumulating over long uptimes. (#6760) Thanks @coygeek.</li>
 <li>Sandbox/Tools: make sandbox file tools bind-mount aware (including absolute container paths) and enforce read-only bind semantics for writes. (#16379) Thanks @tasaankaeris.</li>
-<li>Media/Security: allow local media reads from OpenClaw state <code>workspace/</code> and <code>sandboxes/</code> roots by default so generated workspace media can be delivered without unsafe global path bypasses. (#15541) Thanks @lanceji.</li>
+<li>Media/Security: allow local media reads from MrHammadClaw state <code>workspace/</code> and <code>sandboxes/</code> roots by default so generated workspace media can be delivered without unsafe global path bypasses. (#15541) Thanks @lanceji.</li>
 <li>Media/Security: harden local media allowlist bypasses by requiring an explicit <code>readFile</code> override when callers mark paths as validated, and reject filesystem-root <code>localRoots</code> entries. (#16739)</li>
 <li>Discord/Security: harden voice message media loading (SSRF + allowed-local-root checks) so tool-supplied paths/URLs cannot be used to probe internal URLs or read arbitrary local files.</li>
 <li>Security/BlueBubbles: require explicit <code>mediaLocalRoots</code> allowlists for local outbound media path reads to prevent local file disclosure. (#16322) Thanks @mbelinky.</li>
@@ -98,7 +98,7 @@
 <li>Security/Zalo: reject ambiguous shared-path webhook routing when multiple webhook targets match the same secret.</li>
 <li>Security/Nostr: require loopback source and block cross-origin profile mutation/import attempts. Thanks @vincentkoc.</li>
 <li>Security/Signal: harden signal-cli archive extraction during install to prevent path traversal outside the install root.</li>
-<li>Security/Hooks: restrict hook transform modules to <code>~/.openclaw/hooks/transforms</code> (prevents path traversal/escape module loads via config). Config note: <code>hooks.transformsDir</code> must now be within that directory. Thanks @akhmittra.</li>
+<li>Security/Hooks: restrict hook transform modules to <code>~/.mrhammadclaw/hooks/transforms</code> (prevents path traversal/escape module loads via config). Config note: <code>hooks.transformsDir</code> must now be within that directory. Thanks @akhmittra.</li>
 <li>Security/Hooks: ignore hook package manifest entries that point outside the package directory (prevents out-of-tree handler loads during hook discovery).</li>
 <li>Security/Archive: enforce archive extraction entry/size limits to prevent resource exhaustion from high-expansion ZIP/TAR archives. Thanks @vincentkoc.</li>
 <li>Security/Media: reject oversized base64-backed input media before decoding to avoid large allocations. Thanks @vincentkoc.</li>
@@ -108,7 +108,7 @@
 <li>Security/iMessage: keep DM pairing-store identities out of group allowlist authorization (prevents cross-context command authorization). Thanks @vincentkoc.</li>
 <li>Security/Google Chat: deprecate <code>users/<email></code> allowlists (treat <code>users/...</code> as immutable user id only); keep raw email allowlists for usability. Thanks @vincentkoc.</li>
 <li>Security/Google Chat: reject ambiguous shared-path webhook routing when multiple webhook targets verify successfully (prevents cross-account policy-context misrouting). Thanks @vincentkoc.</li>
-<li>Telegram/Security: require numeric Telegram sender IDs for allowlist authorization (reject <code>@username</code> principals), auto-resolve <code>@username</code> to IDs in <code>openclaw doctor --fix</code> (when possible), and warn in <code>openclaw security audit</code> when legacy configs contain usernames. Thanks @vincentkoc.</li>
+<li>Telegram/Security: require numeric Telegram sender IDs for allowlist authorization (reject <code>@username</code> principals), auto-resolve <code>@username</code> to IDs in <code>mrhammadclaw doctor --fix</code> (when possible), and warn in <code>mrhammadclaw security audit</code> when legacy configs contain usernames. Thanks @vincentkoc.</li>
 <li>Telegram/Security: reject Telegram webhook startup when <code>webhookSecret</code> is missing or empty (prevents unauthenticated webhook request forgery). Thanks @yueyueL.</li>
 <li>Security/Windows: avoid shell invocation when spawning child processes to prevent cmd.exe metacharacter injection via untrusted CLI arguments (e.g. agent prompt text).</li>
 <li>Telegram: set webhook callback timeout handling to <code>onTimeout: "return"</code> (10s) so long-running update processing no longer emits webhook 500s and retry storms. (#16763) Thanks @chansearrington.</li>
@@ -118,7 +118,7 @@
 <li>Security/Agents: enforce workspace-root path bounds for <code>apply_patch</code> in non-sandbox mode to block traversal and symlink escape writes. Thanks @p80n-sec.</li>
 <li>Security/Agents: enforce symlink-escape checks for <code>apply_patch</code> delete hunks under <code>workspaceOnly</code>, while still allowing deleting the symlink itself. Thanks @p80n-sec.</li>
 <li>Security/Agents (macOS): prevent shell injection when writing Claude CLI keychain credentials. (#15924) Thanks @aether-ai-agent.</li>
-<li>macOS: hard-limit unkeyed <code>openclaw://agent</code> deep links and ignore <code>deliver</code> / <code>to</code> / <code>channel</code> unless a valid unattended key is provided. Thanks @Cillian-Collins.</li>
+<li>macOS: hard-limit unkeyed <code>mrhammadclaw://agent</code> deep links and ignore <code>deliver</code> / <code>to</code> / <code>channel</code> unless a valid unattended key is provided. Thanks @Cillian-Collins.</li>
 <li>Scripts/Security: validate GitHub logins and avoid shell invocation in <code>scripts/update-clawtributors.ts</code> to prevent command injection via malicious commit records. Thanks @scanleale.</li>
 <li>Security: fix Chutes manual OAuth login state validation by requiring the full redirect URL (reject code-only pastes) (thanks @aether-ai-agent).</li>
 <li>Security/Gateway: harden tool-supplied <code>gatewayUrl</code> overrides by restricting them to loopback or the configured <code>gateway.remote.url</code>. Thanks @p80n-sec.</li>
@@ -136,18 +136,18 @@
 <li>Security/Voice Call: require valid Twilio webhook signatures even when ngrok free tier loopback compatibility mode is enabled. Thanks @p80n-sec.</li>
 <li>Security/Discovery: stop treating Bonjour TXT records as authoritative routing (prefer resolved service endpoints) and prevent discovery from overriding stored TLS pins; autoconnect now requires a previously trusted gateway. Thanks @simecek.</li>
 </ul>
-<p><a href="https://github.com/openclaw/openclaw/blob/main/CHANGELOG.md">View full changelog</a></p>
+<p><a href="https://github.com/hammadparveez/mrhammadclaw/blob/main/CHANGELOG.md">View full changelog</a></p>
 ]]></description>
-            <enclosure url="https://github.com/openclaw/openclaw/releases/download/v2026.2.14/OpenClaw-2026.2.14.zip" length="22914034" type="application/octet-stream" sparkle:edSignature="lR3nuq46/akMIN8RFDpMkTE0VOVoDVG53Xts589LryMGEtUvJxRQDtHBXfx7ZvToTq6CFKG+L5Kq/4rUspMoAQ=="/>
+            <enclosure url="https://github.com/hammadparveez/mrhammadclaw/releases/download/v2026.2.14/MrHammadClaw-2026.2.14.zip" length="22914034" type="application/octet-stream" sparkle:edSignature="lR3nuq46/akMIN8RFDpMkTE0VOVoDVG53Xts589LryMGEtUvJxRQDtHBXfx7ZvToTq6CFKG+L5Kq/4rUspMoAQ=="/>
         </item>
         <item>
             <title>2026.2.15</title>
             <pubDate>Mon, 16 Feb 2026 05:04:34 +0100</pubDate>
-            <link>https://raw.githubusercontent.com/openclaw/openclaw/main/appcast.xml</link>
+            <link>https://raw.githubusercontent.com/mrhammadclaw/mrhammadclaw/main/appcast.xml</link>
             <sparkle:version>202602150</sparkle:version>
             <sparkle:shortVersionString>2026.2.15</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<h2>OpenClaw 2026.2.15</h2>
+            <description><![CDATA[<h2>MrHammadClaw 2026.2.15</h2>
 <h3>Changes</h3>
 <ul>
 <li>Discord: unlock rich interactive agent prompts with Components v2 (buttons, selects, modals, and attachment-backed file blocks) so for native interaction through Discord. Thanks @thewilloftheshadow.</li>
@@ -204,26 +204,26 @@
 <li>TUI: preserve copy-sensitive long tokens (URLs/paths/file-like identifiers) during wrapping and overflow sanitization so wrapped output no longer inserts spaces that corrupt copy/paste values. (#17515, #17466, #17505) Thanks @abe238, @trevorpan, and @JasonCry.</li>
 <li>CLI/Build: make legacy daemon CLI compatibility shim generation tolerant of minimal tsdown daemon export sets, while preserving restart/register compatibility aliases and surfacing explicit errors for unavailable legacy daemon commands. Thanks @vignesh07.</li>
 </ul>
-<p><a href="https://github.com/openclaw/openclaw/blob/main/CHANGELOG.md">View full changelog</a></p>
+<p><a href="https://github.com/hammadparveez/mrhammadclaw/blob/main/CHANGELOG.md">View full changelog</a></p>
 ]]></description>
-            <enclosure url="https://github.com/openclaw/openclaw/releases/download/v2026.2.15/OpenClaw-2026.2.15.zip" length="22896513" type="application/octet-stream" sparkle:edSignature="MLGsd2NeHXFRH1Or0bFQnAjqfuuJDuhl1mvKFIqTQcRvwbeyvOyyLXrqSbmaOgJR3wBQBKLs6jYQ9dQ/3R8RCg=="/>
+            <enclosure url="https://github.com/hammadparveez/mrhammadclaw/releases/download/v2026.2.15/MrHammadClaw-2026.2.15.zip" length="22896513" type="application/octet-stream" sparkle:edSignature="MLGsd2NeHXFRH1Or0bFQnAjqfuuJDuhl1mvKFIqTQcRvwbeyvOyyLXrqSbmaOgJR3wBQBKLs6jYQ9dQ/3R8RCg=="/>
         </item>
         <item>
             <title>2026.2.25</title>
             <pubDate>Thu, 26 Feb 2026 05:14:17 +0100</pubDate>
-            <link>https://raw.githubusercontent.com/openclaw/openclaw/main/appcast.xml</link>
+            <link>https://raw.githubusercontent.com/mrhammadclaw/mrhammadclaw/main/appcast.xml</link>
             <sparkle:version>14883</sparkle:version>
             <sparkle:shortVersionString>2026.2.25</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<h2>OpenClaw 2026.2.25</h2>
+            <description><![CDATA[<h2>MrHammadClaw 2026.2.25</h2>
 <h3>Changes</h3>
 <ul>
 <li>Android/Chat: improve streaming delivery handling and markdown rendering quality in the native Android chat UI, including better GitHub-flavored markdown behavior. (#26079) Thanks @obviyus.</li>
 <li>Android/Startup perf: defer foreground-service startup, move WebView debugging init out of critical startup, and add startup macrobenchmark + low-noise perf CLI scripts for deterministic cold-start tracking. (#26659) Thanks @obviyus.</li>
 <li>UI/Chat compose: add mobile stacked layout for compose action buttons on small screens to improve send/session controls usability. (#11167) Thanks @junyiz.</li>
 <li>Heartbeat/Config: replace heartbeat DM toggle with <code>agents.defaults.heartbeat.directPolicy</code> (<code>allow</code> | <code>block</code>; also supported per-agent via <code>agents.list[].heartbeat.directPolicy</code>) for clearer delivery semantics.</li>
-<li>Onboarding/Security: clarify onboarding security notices that OpenClaw is personal-by-default (single trusted operator boundary) and shared/multi-user setups require explicit lock-down/hardening.</li>
-<li>Branding/Docs + Apple surfaces: replace remaining <code>bot.molt</code> launchd label, bundle-id, logging subsystem, and command examples with <code>ai.openclaw</code> across docs, iOS app surfaces, helper scripts, and CLI test fixtures.</li>
+<li>Onboarding/Security: clarify onboarding security notices that MrHammadClaw is personal-by-default (single trusted operator boundary) and shared/multi-user setups require explicit lock-down/hardening.</li>
+<li>Branding/Docs + Apple surfaces: replace remaining <code>bot.molt</code> launchd label, bundle-id, logging subsystem, and command examples with <code>ai.mrhammadclaw</code> across docs, iOS app surfaces, helper scripts, and CLI test fixtures.</li>
 <li>Agents/Config: remind agents to call <code>config.schema</code> before config edits or config-field questions to avoid guessing. Thanks @thewilloftheshadow.</li>
 <li>Dependencies: update workspace dependency pins and lockfile (Bedrock SDK <code>3.998.0</code>, <code>@mariozechner/pi-*</code> <code>0.55.1</code>, TypeScript native preview <code>7.0.0-dev.20260225.1</code>) while keeping <code>@buape/carbon</code> pinned.</li>
 </ul>
@@ -256,7 +256,7 @@
 <li>Agents/Model fallback: keep explicit text + image fallback chains reachable even when <code>agents.defaults.models</code> allowlists are present, prefer explicit run <code>agentId</code> over session-key parsing for followup fallback override resolution (with session-key fallback), treat agent-level fallback overrides as configured in embedded runner preflight, and classify <code>model_cooldown</code> / <code>cooling down</code> errors as <code>rate_limit</code> so failover continues. (#11972, #24137, #17231)</li>
 <li>Agents/Model fallback: keep same-provider fallback chains active when session model differs from configured primary, infer cooldown reason from provider profile state (instead of <code>disabledReason</code> only), keep no-profile fallback providers eligible (env/models.json paths), and only relax same-provider cooldown fallback attempts for <code>rate_limit</code>. (#23816) thanks @ramezgaberiel.</li>
 <li>Agents/Model fallback: continue fallback traversal on unrecognized errors when candidates remain, while still throwing the original unknown error on the last candidate. (#26106) Thanks @Sid-Qin.</li>
-<li>Models/Auth probes: map permanent auth failover reasons (<code>auth_permanent</code>, for example revoked keys) into probe auth status instead of <code>unknown</code>, so <code>openclaw models status --probe</code> reports actionable auth failures. (#25754) thanks @rrenamed.</li>
+<li>Models/Auth probes: map permanent auth failover reasons (<code>auth_permanent</code>, for example revoked keys) into probe auth status instead of <code>unknown</code>, so <code>mrhammadclaw models status --probe</code> reports actionable auth failures. (#25754) thanks @rrenamed.</li>
 <li>Hooks/Inbound metadata: include <code>guildId</code> and <code>channelName</code> in <code>message_received</code> metadata for both plugin and internal hook paths. (#26115) Thanks @davidrudduck.</li>
 <li>Discord/Component auth: evaluate guild component interactions with command-gating authorizers so unauthorized users no longer get <code>CommandAuthorized: true</code> on modal/button events. (#26119) Thanks @bmendonca3.</li>
 <li>Security/Gateway auth: require pairing for operator device-identity sessions authenticated with shared token auth so unpaired devices cannot self-assign operator scopes. Thanks @tdjackey for reporting.</li>
@@ -284,9 +284,9 @@
 <li>Security/SSRF guard: classify IPv6 multicast literals (<code>ff00::/8</code>) as blocked/private-internal targets in shared SSRF IP checks, preventing multicast literals from bypassing URL-host preflight and DNS answer validation. This ships in the next npm release (<code>2026.2.25</code>). Thanks @zpbrent for reporting.</li>
 <li>Tests/Low-memory stability: disable Vitest <code>vmForks</code> by default on low-memory local hosts (<code><64 GiB</code>), keep low-profile extension lane parallelism at 4 workers, and align cron isolated-agent tests with <code>setSessionRuntimeModel</code> usage to avoid deterministic suite failures. (#26324) Thanks @ngutman.</li>
 </ul>
-<p><a href="https://github.com/openclaw/openclaw/blob/main/CHANGELOG.md">View full changelog</a></p>
+<p><a href="https://github.com/hammadparveez/mrhammadclaw/blob/main/CHANGELOG.md">View full changelog</a></p>
 ]]></description>
-            <enclosure url="https://github.com/openclaw/openclaw/releases/download/v2026.2.25/OpenClaw-2026.2.25.zip" length="23078398" type="application/octet-stream" sparkle:edSignature="PJjvRhivhybV5bYr8u1C9Dyw4h8yePGwG8SFsr4QRqMSBYMEedraPJO3KNbkoChjclYUYf3oGcC4daNZnFvgBA=="/>
+            <enclosure url="https://github.com/hammadparveez/mrhammadclaw/releases/download/v2026.2.25/MrHammadClaw-2026.2.25.zip" length="23078398" type="application/octet-stream" sparkle:edSignature="PJjvRhivhybV5bYr8u1C9Dyw4h8yePGwG8SFsr4QRqMSBYMEedraPJO3KNbkoChjclYUYf3oGcC4daNZnFvgBA=="/>
         </item>
     </channel>
 </rss>

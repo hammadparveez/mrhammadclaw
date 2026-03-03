@@ -1,4 +1,4 @@
-import { resolveOpenClawAgentDir } from "../agents/agent-paths.js";
+import { resolveMrHammadClawAgentDir } from "../agents/agent-paths.js";
 import { listAgentIds, resolveAgentDir } from "../agents/agent-scope.js";
 import type { AuthProfileCredential, AuthProfileStore } from "../agents/auth-profiles.js";
 import {
@@ -9,7 +9,7 @@ import {
 import {
   clearRuntimeConfigSnapshot,
   setRuntimeConfigSnapshot,
-  type OpenClawConfig,
+  type MrHammadClawConfig,
 } from "../config/config.js";
 import { coerceSecretRef, type SecretRef } from "../config/types.secrets.js";
 import { resolveUserPath } from "../utils.js";
@@ -26,8 +26,8 @@ export type SecretResolverWarning = {
 };
 
 export type PreparedSecretsRuntimeSnapshot = {
-  sourceConfig: OpenClawConfig;
-  config: OpenClawConfig;
+  sourceConfig: MrHammadClawConfig;
+  config: MrHammadClawConfig;
   authStores: Array<{ agentDir: string; store: AuthProfileStore }>;
   warnings: SecretResolverWarning[];
 };
@@ -66,14 +66,14 @@ type SecretAssignment = {
 };
 
 type ResolverContext = {
-  sourceConfig: OpenClawConfig;
+  sourceConfig: MrHammadClawConfig;
   env: NodeJS.ProcessEnv;
   cache: SecretRefResolveCache;
   warnings: SecretResolverWarning[];
   assignments: SecretAssignment[];
 };
 
-type SecretDefaults = NonNullable<OpenClawConfig["secrets"]>["defaults"];
+type SecretDefaults = NonNullable<MrHammadClawConfig["secrets"]>["defaults"];
 
 let activeSnapshot: PreparedSecretsRuntimeSnapshot | null = null;
 
@@ -196,7 +196,7 @@ function collectGoogleChatAssignments(params: {
 }
 
 function collectConfigAssignments(params: {
-  config: OpenClawConfig;
+  config: MrHammadClawConfig;
   context: ResolverContext;
 }): void {
   const defaults = params.context.sourceConfig.secrets?.defaults;
@@ -341,9 +341,9 @@ function applyAssignments(params: {
   }
 }
 
-function collectCandidateAgentDirs(config: OpenClawConfig): string[] {
+function collectCandidateAgentDirs(config: MrHammadClawConfig): string[] {
   const dirs = new Set<string>();
-  dirs.add(resolveUserPath(resolveOpenClawAgentDir()));
+  dirs.add(resolveUserPath(resolveMrHammadClawAgentDir()));
   for (const agentId of listAgentIds(config)) {
     dirs.add(resolveUserPath(resolveAgentDir(config, agentId)));
   }
@@ -351,7 +351,7 @@ function collectCandidateAgentDirs(config: OpenClawConfig): string[] {
 }
 
 export async function prepareSecretsRuntimeSnapshot(params: {
-  config: OpenClawConfig;
+  config: MrHammadClawConfig;
   env?: NodeJS.ProcessEnv;
   agentDirs?: string[];
   loadAuthStore?: (agentDir?: string) => AuthProfileStore;

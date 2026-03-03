@@ -1,14 +1,14 @@
 ---
-summary: "CLI reference for `openclaw setup` (initialize config + workspace)"
+summary: "CLI reference for `mrhammadclaw setup` (initialize config + workspace)"
 read_when:
   - You’re doing first-run setup without the full onboarding wizard
   - You want to set the default workspace path
 title: "setup"
 ---
 
-# `openclaw setup`
+# `mrhammadclaw setup`
 
-Initialize `~/.openclaw/openclaw.json` and the agent workspace.
+Initialize `~/.mrhammadclaw/mrhammadclaw.json` and the agent workspace.
 
 Related:
 
@@ -18,12 +18,12 @@ Related:
 ## Examples
 
 ```bash
-openclaw setup
-openclaw setup --workspace ~/.openclaw/workspace
+mrhammadclaw setup
+mrhammadclaw setup --workspace ~/.mrhammadclaw/workspace
 ```
 
 To run the wizard via setup:
 
 ```bash
-openclaw setup --wizard
+mrhammadclaw setup --wizard
 ```

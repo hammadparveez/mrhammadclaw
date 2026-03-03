@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { MrHammadClawConfig } from "../../../config/config.js";
 import { imessageOutbound } from "./imessage.js";
 
 describe("imessageOutbound", () => {
-  const cfg: OpenClawConfig = {
+  const cfg: MrHammadClawConfig = {
     channels: {
       imessage: {
         mediaMaxMb: 2,

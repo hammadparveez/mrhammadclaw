@@ -1,5 +1,5 @@
 import { resolveGatewayPort } from "../../config/config.js";
-import type { OpenClawConfig, ConfigFileSnapshot } from "../../config/types.js";
+import type { MrHammadClawConfig, ConfigFileSnapshot } from "../../config/types.js";
 import type { GatewayProbeResult } from "../../gateway/probe.js";
 import { pickPrimaryTailnetIPv4 } from "../../infra/tailnet.js";
 import { colorize, theme } from "../../terminal/theme.js";
@@ -88,7 +88,10 @@ function normalizeWsUrl(value: string): string | null {
   return trimmed;
 }
 
-export function resolveTargets(cfg: OpenClawConfig, explicitUrl?: string): GatewayStatusTarget[] {
+export function resolveTargets(
+  cfg: MrHammadClawConfig,
+  explicitUrl?: string,
+): GatewayStatusTarget[] {
   const targets: GatewayStatusTarget[] = [];
   const add = (t: GatewayStatusTarget) => {
     if (!targets.some((x) => x.url === t.url)) {
@@ -145,7 +148,7 @@ export function sanitizeSshTarget(value: unknown): string | null {
 }
 
 export function resolveAuthForTarget(
-  cfg: OpenClawConfig,
+  cfg: MrHammadClawConfig,
   target: GatewayStatusTarget,
   overrides: { token?: string; password?: string },
 ): { token?: string; password?: string } {
@@ -166,8 +169,8 @@ export function resolveAuthForTarget(
     };
   }
 
-  const envToken = process.env.OPENCLAW_GATEWAY_TOKEN?.trim() || "";
-  const envPassword = process.env.OPENCLAW_GATEWAY_PASSWORD?.trim() || "";
+  const envToken = process.env.MRHAMMADCLAW_GATEWAY_TOKEN?.trim() || "";
+  const envPassword = process.env.MRHAMMADCLAW_GATEWAY_PASSWORD?.trim() || "";
   const cfgToken =
     typeof cfg.gateway?.auth?.token === "string" ? cfg.gateway.auth.token.trim() : "";
   const cfgPassword =
@@ -244,7 +247,7 @@ export function extractConfigSummary(snapshotUnknown: unknown): GatewayConfigSum
   };
 }
 
-export function buildNetworkHints(cfg: OpenClawConfig) {
+export function buildNetworkHints(cfg: MrHammadClawConfig) {
   const tailnetIPv4 = pickPrimaryTailnetIPv4();
   const port = resolveGatewayPort(cfg);
   return {

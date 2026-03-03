@@ -3,7 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { ensureAuthProfileStore } from "../agents/auth-profiles.js";
-import { loadConfig, type OpenClawConfig } from "../config/config.js";
+import { loadConfig, type MrHammadClawConfig } from "../config/config.js";
 import {
   activateSecretsRuntimeSnapshot,
   clearSecretsRuntimeSnapshot,
@@ -16,7 +16,7 @@ describe("secrets runtime snapshot", () => {
   });
 
   it("resolves env refs for config and auth profiles", async () => {
-    const config: OpenClawConfig = {
+    const config: MrHammadClawConfig = {
       models: {
         providers: {
           openai: {
@@ -43,7 +43,7 @@ describe("secrets runtime snapshot", () => {
         GITHUB_TOKEN: "ghp-env-token",
         REVIEW_SKILL_API_KEY: "sk-skill-ref",
       },
-      agentDirs: ["/tmp/openclaw-agent-main"],
+      agentDirs: ["/tmp/mrhammadclaw-agent-main"],
       loadAuthStore: () => ({
         version: 1,
         profiles: {
@@ -89,7 +89,7 @@ describe("secrets runtime snapshot", () => {
     if (process.platform === "win32") {
       return;
     }
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-secrets-file-provider-"));
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "mrhammadclaw-secrets-file-provider-"));
     const secretsPath = path.join(root, "secrets.json");
     try {
       await fs.writeFile(
@@ -109,7 +109,7 @@ describe("secrets runtime snapshot", () => {
       );
       await fs.chmod(secretsPath, 0o600);
 
-      const config: OpenClawConfig = {
+      const config: MrHammadClawConfig = {
         secrets: {
           providers: {
             default: {
@@ -135,7 +135,7 @@ describe("secrets runtime snapshot", () => {
 
       const snapshot = await prepareSecretsRuntimeSnapshot({
         config,
-        agentDirs: ["/tmp/openclaw-agent-main"],
+        agentDirs: ["/tmp/mrhammadclaw-agent-main"],
         loadAuthStore: () => ({ version: 1, profiles: {} }),
       });
 
@@ -149,7 +149,9 @@ describe("secrets runtime snapshot", () => {
     if (process.platform === "win32") {
       return;
     }
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-secrets-file-provider-bad-"));
+    const root = await fs.mkdtemp(
+      path.join(os.tmpdir(), "mrhammadclaw-secrets-file-provider-bad-"),
+    );
     const secretsPath = path.join(root, "secrets.json");
     try {
       await fs.writeFile(secretsPath, JSON.stringify(["not-an-object"]), "utf8");
@@ -177,7 +179,7 @@ describe("secrets runtime snapshot", () => {
               },
             },
           },
-          agentDirs: ["/tmp/openclaw-agent-main"],
+          agentDirs: ["/tmp/mrhammadclaw-agent-main"],
           loadAuthStore: () => ({ version: 1, profiles: {} }),
         }),
       ).rejects.toThrow("payload is not a JSON object");
@@ -200,7 +202,7 @@ describe("secrets runtime snapshot", () => {
         },
       },
       env: { OPENAI_API_KEY: "sk-runtime" },
-      agentDirs: ["/tmp/openclaw-agent-main"],
+      agentDirs: ["/tmp/mrhammadclaw-agent-main"],
       loadAuthStore: () => ({
         version: 1,
         profiles: {
@@ -216,7 +218,7 @@ describe("secrets runtime snapshot", () => {
     activateSecretsRuntimeSnapshot(prepared);
 
     expect(loadConfig().models?.providers?.openai?.apiKey).toBe("sk-runtime");
-    const store = ensureAuthProfileStore("/tmp/openclaw-agent-main");
+    const store = ensureAuthProfileStore("/tmp/mrhammadclaw-agent-main");
     expect(store.profiles["openai:default"]).toMatchObject({
       type: "api_key",
       key: "sk-runtime",
@@ -224,11 +226,11 @@ describe("secrets runtime snapshot", () => {
   });
 
   it("does not write inherited auth stores during runtime secret activation", async () => {
-    const root = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-secrets-runtime-"));
-    const stateDir = path.join(root, ".openclaw");
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "mrhammadclaw-secrets-runtime-"));
+    const stateDir = path.join(root, ".mrhammadclaw");
     const mainAgentDir = path.join(stateDir, "agents", "main", "agent");
     const workerStorePath = path.join(stateDir, "agents", "worker", "agent", "auth-profiles.json");
-    const prevStateDir = process.env.OPENCLAW_STATE_DIR;
+    const prevStateDir = process.env.MRHAMMADCLAW_STATE_DIR;
 
     try {
       await fs.mkdir(mainAgentDir, { recursive: true });
@@ -246,7 +248,7 @@ describe("secrets runtime snapshot", () => {
         }),
         "utf8",
       );
-      process.env.OPENCLAW_STATE_DIR = stateDir;
+      process.env.MRHAMMADCLAW_STATE_DIR = stateDir;
 
       await prepareSecretsRuntimeSnapshot({
         config: {
@@ -260,9 +262,9 @@ describe("secrets runtime snapshot", () => {
       await expect(fs.access(workerStorePath)).rejects.toMatchObject({ code: "ENOENT" });
     } finally {
       if (prevStateDir === undefined) {
-        delete process.env.OPENCLAW_STATE_DIR;
+        delete process.env.MRHAMMADCLAW_STATE_DIR;
       } else {
-        process.env.OPENCLAW_STATE_DIR = prevStateDir;
+        process.env.MRHAMMADCLAW_STATE_DIR = prevStateDir;
       }
       await fs.rm(root, { recursive: true, force: true });
     }

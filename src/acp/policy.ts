@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { MrHammadClawConfig } from "../config/config.js";
 import { normalizeAgentId } from "../routing/session-key.js";
 import { AcpRuntimeError } from "./runtime/errors.js";
 
@@ -8,11 +8,11 @@ const ACP_DISPATCH_DISABLED_MESSAGE =
 
 export type AcpDispatchPolicyState = "enabled" | "acp_disabled" | "dispatch_disabled";
 
-export function isAcpEnabledByPolicy(cfg: OpenClawConfig): boolean {
+export function isAcpEnabledByPolicy(cfg: MrHammadClawConfig): boolean {
   return cfg.acp?.enabled !== false;
 }
 
-export function resolveAcpDispatchPolicyState(cfg: OpenClawConfig): AcpDispatchPolicyState {
+export function resolveAcpDispatchPolicyState(cfg: MrHammadClawConfig): AcpDispatchPolicyState {
   if (!isAcpEnabledByPolicy(cfg)) {
     return "acp_disabled";
   }
@@ -22,11 +22,11 @@ export function resolveAcpDispatchPolicyState(cfg: OpenClawConfig): AcpDispatchP
   return "enabled";
 }
 
-export function isAcpDispatchEnabledByPolicy(cfg: OpenClawConfig): boolean {
+export function isAcpDispatchEnabledByPolicy(cfg: MrHammadClawConfig): boolean {
   return resolveAcpDispatchPolicyState(cfg) === "enabled";
 }
 
-export function resolveAcpDispatchPolicyMessage(cfg: OpenClawConfig): string | null {
+export function resolveAcpDispatchPolicyMessage(cfg: MrHammadClawConfig): string | null {
   const state = resolveAcpDispatchPolicyState(cfg);
   if (state === "acp_disabled") {
     return ACP_DISABLED_MESSAGE;
@@ -37,7 +37,7 @@ export function resolveAcpDispatchPolicyMessage(cfg: OpenClawConfig): string | n
   return null;
 }
 
-export function resolveAcpDispatchPolicyError(cfg: OpenClawConfig): AcpRuntimeError | null {
+export function resolveAcpDispatchPolicyError(cfg: MrHammadClawConfig): AcpRuntimeError | null {
   const message = resolveAcpDispatchPolicyMessage(cfg);
   if (!message) {
     return null;
@@ -45,7 +45,7 @@ export function resolveAcpDispatchPolicyError(cfg: OpenClawConfig): AcpRuntimeEr
   return new AcpRuntimeError("ACP_DISPATCH_DISABLED", message);
 }
 
-export function isAcpAgentAllowedByPolicy(cfg: OpenClawConfig, agentId: string): boolean {
+export function isAcpAgentAllowedByPolicy(cfg: MrHammadClawConfig, agentId: string): boolean {
   const allowed = (cfg.acp?.allowedAgents ?? [])
     .map((entry) => normalizeAgentId(entry))
     .filter(Boolean);
@@ -56,7 +56,7 @@ export function isAcpAgentAllowedByPolicy(cfg: OpenClawConfig, agentId: string):
 }
 
 export function resolveAcpAgentPolicyError(
-  cfg: OpenClawConfig,
+  cfg: MrHammadClawConfig,
   agentId: string,
 ): AcpRuntimeError | null {
   if (isAcpAgentAllowedByPolicy(cfg, agentId)) {

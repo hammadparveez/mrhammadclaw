@@ -1,13 +1,13 @@
 {
-  "name": "@openclaw/memory-core",
+  "name": "@mrhammadclaw/memory-core",
   "version": "2026.2.26",
   "private": true,
-  "description": "OpenClaw core memory search plugin",
+  "description": "MrHammadClaw core memory search plugin",
   "type": "module",
   "peerDependencies": {
-    "openclaw": ">=2026.1.26"
+    "mrhammadclaw": ">=2026.1.26"
   },
-  "openclaw": {
+  "mrhammadclaw": {
     "extensions": [
       "./index.ts"
     ]

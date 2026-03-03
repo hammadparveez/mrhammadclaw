@@ -4,7 +4,7 @@ description: ElevenLabs text-to-speech with mac-style say UX.
 homepage: https://sag.sh
 metadata:
   {
-    "openclaw":
+    "mrhammadclaw":
       {
         "emoji": "🗣️",
         "requires": { "bins": ["sag"], "env": ["ELEVENLABS_API_KEY"] },

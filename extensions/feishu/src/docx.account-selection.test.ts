@@ -1,4 +1,4 @@
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk";
+import type { MrHammadClawPluginApi } from "mrhammadclaw/plugin-sdk";
 import { describe, expect, test, vi } from "vitest";
 import { registerFeishuDocTools } from "./docx.js";
 import { createToolFactoryHarness } from "./tool-factory-test-harness.js";
@@ -32,7 +32,7 @@ describe("feishu_doc account selection", () => {
           },
         },
       },
-    } as OpenClawPluginApi["config"];
+    } as MrHammadClawPluginApi["config"];
 
     const { api, resolveTool } = createToolFactoryHarness(cfg);
     registerFeishuDocTools(api);
@@ -59,7 +59,7 @@ describe("feishu_doc account selection", () => {
           },
         },
       },
-    } as OpenClawPluginApi["config"];
+    } as MrHammadClawPluginApi["config"];
 
     const { api, resolveTool } = createToolFactoryHarness(cfg);
     registerFeishuDocTools(api);

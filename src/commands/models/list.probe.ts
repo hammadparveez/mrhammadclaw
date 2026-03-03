@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
-import { resolveOpenClawAgentDir } from "../../agents/agent-paths.js";
+import { resolveMrHammadClawAgentDir } from "../../agents/agent-paths.js";
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../../agents/agent-scope.js";
 import {
   ensureAuthProfileStore,
@@ -18,7 +18,7 @@ import {
 } from "../../agents/model-selection.js";
 import { runEmbeddedPiAgent } from "../../agents/pi-embedded.js";
 import { resolveDefaultAgentWorkspaceDir } from "../../agents/workspace.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MrHammadClawConfig } from "../../config/config.js";
 import {
   resolveSessionTranscriptPath,
   resolveSessionTranscriptsDirForAgent,
@@ -140,7 +140,7 @@ function selectProbeModel(params: {
 }
 
 function buildProbeTargets(params: {
-  cfg: OpenClawConfig;
+  cfg: MrHammadClawConfig;
   providers: string[];
   modelCandidates: string[];
   options: AuthProbeOptions;
@@ -280,7 +280,7 @@ function buildProbeTargets(params: {
 }
 
 async function probeTarget(params: {
-  cfg: OpenClawConfig;
+  cfg: MrHammadClawConfig;
   agentId: string;
   agentDir: string;
   workspaceDir: string;
@@ -356,7 +356,7 @@ async function probeTarget(params: {
 }
 
 async function runTargetsWithConcurrency(params: {
-  cfg: OpenClawConfig;
+  cfg: MrHammadClawConfig;
   targets: AuthProbeTarget[];
   timeoutMs: number;
   maxTokens: number;
@@ -367,7 +367,7 @@ async function runTargetsWithConcurrency(params: {
   const concurrency = Math.max(1, Math.min(targets.length || 1, params.concurrency));
 
   const agentId = resolveDefaultAgentId(cfg);
-  const agentDir = resolveOpenClawAgentDir();
+  const agentDir = resolveMrHammadClawAgentDir();
   const workspaceDir = resolveAgentWorkspaceDir(cfg, agentId) ?? resolveDefaultAgentWorkspaceDir();
   const sessionDir = resolveSessionTranscriptsDirForAgent(agentId);
 
@@ -412,7 +412,7 @@ async function runTargetsWithConcurrency(params: {
 }
 
 export async function runAuthProbes(params: {
-  cfg: OpenClawConfig;
+  cfg: MrHammadClawConfig;
   providers: string[];
   modelCandidates: string[];
   options: AuthProbeOptions;

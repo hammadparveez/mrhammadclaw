@@ -1,22 +1,22 @@
 import { listChannelPlugins } from "../channels/plugins/index.js";
 import type { ChannelId } from "../channels/plugins/types.js";
 import { formatCliCommand } from "../cli/command-format.js";
-import type { OpenClawConfig, GatewayBindMode } from "../config/config.js";
+import type { MrHammadClawConfig, GatewayBindMode } from "../config/config.js";
 import { resolveGatewayAuth } from "../gateway/auth.js";
 import { isLoopbackHost, resolveGatewayBindHost } from "../gateway/net.js";
 import { resolveDmAllowState } from "../security/dm-policy-shared.js";
 import { note } from "../terminal/note.js";
 import { resolveDefaultChannelAccountContext } from "./channel-account-context.js";
 
-export async function noteSecurityWarnings(cfg: OpenClawConfig) {
+export async function noteSecurityWarnings(cfg: MrHammadClawConfig) {
   const warnings: string[] = [];
-  const auditHint = `- Run: ${formatCliCommand("openclaw security audit --deep")}`;
+  const auditHint = `- Run: ${formatCliCommand("mrhammadclaw security audit --deep")}`;
 
   if (cfg.approvals?.exec?.enabled === false) {
     warnings.push(
       "- Note: approvals.exec.enabled=false disables approval forwarding only.",
-      "  Host exec gating still comes from ~/.openclaw/exec-approvals.json.",
-      `  Check local policy with: ${formatCliCommand("openclaw approvals get --gateway")}`,
+      "  Host exec gating still comes from ~/.mrhammadclaw/exec-approvals.json.",
+      `  Check local policy with: ${formatCliCommand("mrhammadclaw approvals get --gateway")}`,
     );
   }
 
@@ -53,7 +53,7 @@ export async function noteSecurityWarnings(cfg: OpenClawConfig) {
   const saferRemoteAccessLines = [
     "  Safer remote access: keep bind loopback and use Tailscale Serve/Funnel or an SSH tunnel.",
     "  Example tunnel: ssh -N -L 18789:127.0.0.1:18789 user@gateway-host",
-    "  Docs: https://docs.openclaw.ai/gateway/remote",
+    "  Docs: https://docs.mrhammadclaw.ai/gateway/remote",
   ];
 
   if (isExposed) {
@@ -61,19 +61,19 @@ export async function noteSecurityWarnings(cfg: OpenClawConfig) {
       const authFixLines =
         resolvedAuth.mode === "password"
           ? [
-              `  Fix: ${formatCliCommand("openclaw configure")} to set a password`,
-              `  Or switch to token: ${formatCliCommand("openclaw config set gateway.auth.mode token")}`,
+              `  Fix: ${formatCliCommand("mrhammadclaw configure")} to set a password`,
+              `  Or switch to token: ${formatCliCommand("mrhammadclaw config set gateway.auth.mode token")}`,
             ]
           : [
-              `  Fix: ${formatCliCommand("openclaw doctor --fix")} to generate a token`,
+              `  Fix: ${formatCliCommand("mrhammadclaw doctor --fix")} to generate a token`,
               `  Or set token directly: ${formatCliCommand(
-                "openclaw config set gateway.auth.mode token",
+                "mrhammadclaw config set gateway.auth.mode token",
               )}`,
             ];
       warnings.push(
         `- CRITICAL: Gateway bound to ${bindDescriptor} without authentication.`,
         `  Anyone on your network (or internet if port-forwarded) can fully control your agent.`,
-        `  Fix: ${formatCliCommand("openclaw config set gateway.bind loopback")}`,
+        `  Fix: ${formatCliCommand("mrhammadclaw config set gateway.bind loopback")}`,
         ...saferRemoteAccessLines,
         ...authFixLines,
       );
@@ -131,7 +131,7 @@ export async function noteSecurityWarnings(cfg: OpenClawConfig) {
     if (dmScope === "main" && isMultiUserDm) {
       warnings.push(
         `- ${params.label} DMs: multiple senders share the main session; run: ` +
-          formatCliCommand('openclaw config set session.dmScope "per-channel-peer"') +
+          formatCliCommand('mrhammadclaw config set session.dmScope "per-channel-peer"') +
           ' (or "per-account-channel-peer" for multi-account channels) to isolate sessions.',
       );
     }

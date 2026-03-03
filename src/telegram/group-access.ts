@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { MrHammadClawConfig } from "../config/config.js";
 import type { ChannelGroupPolicy } from "../config/group-policy.js";
 import { resolveOpenProviderRuntimeGroupPolicy } from "../config/runtime-group-policy.js";
 import type {
@@ -92,7 +92,7 @@ export const resolveTelegramRuntimeGroupPolicy = (params: {
 export const evaluateTelegramGroupPolicyAccess = (params: {
   isGroup: boolean;
   chatId: string | number;
-  cfg: OpenClawConfig;
+  cfg: MrHammadClawConfig;
   telegramCfg: TelegramAccountConfig;
   topicConfig?: TelegramTopicConfig;
   groupConfig?: TelegramGroupConfig;

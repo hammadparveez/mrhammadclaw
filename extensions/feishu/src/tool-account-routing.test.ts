@@ -1,4 +1,4 @@
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk";
+import type { MrHammadClawPluginApi } from "mrhammadclaw/plugin-sdk";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { registerFeishuBitableTools } from "./bitable.js";
 import { registerFeishuDriveTools } from "./drive.js";
@@ -25,7 +25,7 @@ function createConfig(params: {
     drive?: boolean;
     perm?: boolean;
   };
-}): OpenClawPluginApi["config"] {
+}): MrHammadClawPluginApi["config"] {
   return {
     channels: {
       feishu: {
@@ -44,7 +44,7 @@ function createConfig(params: {
         },
       },
     },
-  } as OpenClawPluginApi["config"];
+  } as MrHammadClawPluginApi["config"];
 }
 
 describe("feishu tool account routing", () => {

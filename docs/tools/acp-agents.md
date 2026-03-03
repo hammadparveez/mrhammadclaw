@@ -9,9 +9,9 @@ title: "ACP Agents"
 
 # ACP agents
 
-ACP sessions let OpenClaw run external coding harnesses (for example Pi, Claude Code, Codex, OpenCode, and Gemini CLI) through an ACP backend plugin.
+ACP sessions let MrHammadClaw run external coding harnesses (for example Pi, Claude Code, Codex, OpenCode, and Gemini CLI) through an ACP backend plugin.
 
-If you ask OpenClaw in plain language to "run this in Codex" or "start Claude Code in a thread", OpenClaw should route that request to the ACP runtime (not the native sub-agent runtime).
+If you ask MrHammadClaw in plain language to "run this in Codex" or "start Claude Code in a thread", MrHammadClaw should route that request to the ACP runtime (not the native sub-agent runtime).
 
 ## Quick start for humans
 
@@ -21,7 +21,7 @@ Examples of natural requests:
 - "Run this as a one-shot Claude Code ACP session and summarize the result."
 - "Use Gemini CLI for this task in a thread, then keep follow-ups in that same thread."
 
-What OpenClaw should do:
+What MrHammadClaw should do:
 
 1. Pick `runtime: "acp"`.
 2. Resolve the requested harness target (`agentId`, for example `codex`).
@@ -30,14 +30,14 @@ What OpenClaw should do:
 
 ## ACP versus sub-agents
 
-Use ACP when you want an external harness runtime. Use sub-agents when you want OpenClaw-native delegated runs.
+Use ACP when you want an external harness runtime. Use sub-agents when you want MrHammadClaw-native delegated runs.
 
-| Area          | ACP session                           | Sub-agent run                      |
-| ------------- | ------------------------------------- | ---------------------------------- |
-| Runtime       | ACP backend plugin (for example acpx) | OpenClaw native sub-agent runtime  |
-| Session key   | `agent:<agentId>:acp:<uuid>`          | `agent:<agentId>:subagent:<uuid>`  |
-| Main commands | `/acp ...`                            | `/subagents ...`                   |
-| Spawn tool    | `sessions_spawn` with `runtime:"acp"` | `sessions_spawn` (default runtime) |
+| Area          | ACP session                           | Sub-agent run                         |
+| ------------- | ------------------------------------- | ------------------------------------- |
+| Runtime       | ACP backend plugin (for example acpx) | MrHammadClaw native sub-agent runtime |
+| Session key   | `agent:<agentId>:acp:<uuid>`          | `agent:<agentId>:subagent:<uuid>`     |
+| Main commands | `/acp ...`                            | `/subagents ...`                      |
+| Spawn tool    | `sessions_spawn` with `runtime:"acp"` | `sessions_spawn` (default runtime)    |
 
 See also [Sub-agents](/tools/subagents).
 
@@ -45,12 +45,12 @@ See also [Sub-agents](/tools/subagents).
 
 When thread bindings are enabled for a channel adapter, ACP sessions can be bound to threads:
 
-- OpenClaw binds a thread to a target ACP session.
+- MrHammadClaw binds a thread to a target ACP session.
 - Follow-up messages in that thread route to the bound ACP session.
 - ACP output is delivered back to the same thread.
 - Unfocus/close/archive/TTL expiry removes the binding.
 
-Thread binding support is adapter-specific. If the active channel adapter does not support thread bindings, OpenClaw returns a clear unsupported/unavailable message.
+Thread binding support is adapter-specific. If the active channel adapter does not support thread bindings, MrHammadClaw returns a clear unsupported/unavailable message.
 
 Required feature flags for thread-bound ACP:
 
@@ -84,7 +84,7 @@ Use `runtime: "acp"` to start an ACP session from an agent turn or tool call.
 Notes:
 
 - `runtime` defaults to `subagent`, so set `runtime: "acp"` explicitly for ACP sessions.
-- If `agentId` is omitted, OpenClaw uses `acp.defaultAgent` when configured.
+- If `agentId` is omitted, MrHammadClaw uses `acp.defaultAgent` when configured.
 - `mode: "session"` requires `thread: true` to keep a persistent bound conversation.
 
 Interface details:
@@ -95,7 +95,7 @@ Interface details:
 - `thread` (optional, default `false`): request thread binding flow where supported.
 - `mode` (optional): `run` (one-shot) or `session` (persistent).
   - default is `run`
-  - if `thread: true` and mode omitted, OpenClaw may default to persistent behavior per runtime path
+  - if `thread: true` and mode omitted, MrHammadClaw may default to persistent behavior per runtime path
   - `mode: "session"` requires `thread: true`
 - `cwd` (optional): requested runtime working directory (validated by backend/runtime policy).
 - `label` (optional): operator-facing label used in session/banner text.
@@ -141,7 +141,7 @@ Available command family:
 
 `/acp status` shows the effective runtime options and, when available, both runtime-level and backend-level session identifiers.
 
-Some controls depend on backend capabilities. If a backend does not support a control, OpenClaw returns a clear unsupported-control error.
+Some controls depend on backend capabilities. If a backend does not support a control, MrHammadClaw returns a clear unsupported-control error.
 
 ## acpx harness support (current)
 
@@ -153,9 +153,9 @@ Current acpx built-in harness aliases:
 - `opencode`
 - `gemini`
 
-When OpenClaw uses the acpx backend, prefer these values for `agentId` unless your acpx config defines custom agent aliases.
+When MrHammadClaw uses the acpx backend, prefer these values for `agentId` unless your acpx config defines custom agent aliases.
 
-Direct acpx CLI usage can also target arbitrary adapters via `--agent <command>`, but that raw escape hatch is an acpx CLI feature (not the normal OpenClaw `agentId` path).
+Direct acpx CLI usage can also target arbitrary adapters via `--agent <command>`, but that raw escape hatch is an acpx CLI feature (not the normal MrHammadClaw `agentId` path).
 
 ## Required config
 
@@ -213,14 +213,14 @@ See [Configuration Reference](/gateway/configuration-reference).
 Install and enable plugin:
 
 ```bash
-openclaw plugins install @openclaw/acpx
-openclaw config set plugins.entries.acpx.enabled true
+mrhammadclaw plugins install @mrhammadclaw/acpx
+mrhammadclaw config set plugins.entries.acpx.enabled true
 ```
 
 Local workspace install during development:
 
 ```bash
-openclaw plugins install ./extensions/acpx
+mrhammadclaw plugins install ./extensions/acpx
 ```
 
 Then verify backend health:
@@ -231,7 +231,7 @@ Then verify backend health:
 
 ### Pinned acpx install strategy (current behavior)
 
-`@openclaw/acpx` now enforces a strict plugin-local pinning model:
+`@mrhammadclaw/acpx` now enforces a strict plugin-local pinning model:
 
 1. The extension pins an exact acpx dependency in `extensions/acpx/package.json`.
 2. Runtime command is fixed to the plugin-local binary (`extensions/acpx/node_modules/.bin/acpx`), not global `PATH`.
@@ -242,7 +242,7 @@ Then verify backend health:
 
 Notes:
 
-- OpenClaw startup stays non-blocking while acpx ensure runs.
+- MrHammadClaw startup stays non-blocking while acpx ensure runs.
 - If network/install fails, backend remains unavailable and `/acp doctor` reports an actionable fix.
 
 See [Plugins](/tools/plugin).

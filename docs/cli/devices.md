@@ -1,78 +1,78 @@
 ---
-summary: "CLI reference for `openclaw devices` (device pairing + token rotation/revocation)"
+summary: "CLI reference for `mrhammadclaw devices` (device pairing + token rotation/revocation)"
 read_when:
   - You are approving device pairing requests
   - You need to rotate or revoke device tokens
 title: "devices"
 ---
 
-# `openclaw devices`
+# `mrhammadclaw devices`
 
 Manage device pairing requests and device-scoped tokens.
 
 ## Commands
 
-### `openclaw devices list`
+### `mrhammadclaw devices list`
 
 List pending pairing requests and paired devices.
 
 ```
-openclaw devices list
-openclaw devices list --json
+mrhammadclaw devices list
+mrhammadclaw devices list --json
 ```
 
-### `openclaw devices remove <deviceId>`
+### `mrhammadclaw devices remove <deviceId>`
 
 Remove one paired device entry.
 
 ```
-openclaw devices remove <deviceId>
-openclaw devices remove <deviceId> --json
+mrhammadclaw devices remove <deviceId>
+mrhammadclaw devices remove <deviceId> --json
 ```
 
-### `openclaw devices clear --yes [--pending]`
+### `mrhammadclaw devices clear --yes [--pending]`
 
 Clear paired devices in bulk.
 
 ```
-openclaw devices clear --yes
-openclaw devices clear --yes --pending
-openclaw devices clear --yes --pending --json
+mrhammadclaw devices clear --yes
+mrhammadclaw devices clear --yes --pending
+mrhammadclaw devices clear --yes --pending --json
 ```
 
-### `openclaw devices approve [requestId] [--latest]`
+### `mrhammadclaw devices approve [requestId] [--latest]`
 
-Approve a pending device pairing request. If `requestId` is omitted, OpenClaw
+Approve a pending device pairing request. If `requestId` is omitted, MrHammadClaw
 automatically approves the most recent pending request.
 
 ```
-openclaw devices approve
-openclaw devices approve <requestId>
-openclaw devices approve --latest
+mrhammadclaw devices approve
+mrhammadclaw devices approve <requestId>
+mrhammadclaw devices approve --latest
 ```
 
-### `openclaw devices reject <requestId>`
+### `mrhammadclaw devices reject <requestId>`
 
 Reject a pending device pairing request.
 
 ```
-openclaw devices reject <requestId>
+mrhammadclaw devices reject <requestId>
 ```
 
-### `openclaw devices rotate --device <id> --role <role> [--scope <scope...>]`
+### `mrhammadclaw devices rotate --device <id> --role <role> [--scope <scope...>]`
 
 Rotate a device token for a specific role (optionally updating scopes).
 
 ```
-openclaw devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
+mrhammadclaw devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
 ```
 
-### `openclaw devices revoke --device <id> --role <role>`
+### `mrhammadclaw devices revoke --device <id> --role <role>`
 
 Revoke a device token for a specific role.
 
 ```
-openclaw devices revoke --device <deviceId> --role node
+mrhammadclaw devices revoke --device <deviceId> --role node
 ```
 
 ## Common options

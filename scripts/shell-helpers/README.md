@@ -2,7 +2,7 @@
 
 Stop typing `docker-compose` commands. Just type `clawdock-start`.
 
-Inspired by Simon Willison's [Running OpenClaw in Docker](https://til.simonwillison.net/llms/openclaw-docker).
+Inspired by Simon Willison's [Running MrHammadClaw in Docker](https://til.simonwillison.net/llms/mrhammadclaw-docker).
 
 - [Quickstart](#quickstart)
 - [Available Commands](#available-commands)
@@ -25,7 +25,7 @@ Inspired by Simon Willison's [Running OpenClaw in Docker](https://til.simonwilli
 **Install:**
 
 ```bash
-mkdir -p ~/.clawdock && curl -sL https://raw.githubusercontent.com/openclaw/openclaw/main/scripts/shell-helpers/clawdock-helpers.sh -o ~/.clawdock/clawdock-helpers.sh
+mkdir -p ~/.clawdock && curl -sL https://raw.githubusercontent.com/mrhammadclaw/mrhammadclaw/main/scripts/shell-helpers/clawdock-helpers.sh -o ~/.clawdock/clawdock-helpers.sh
 ```
 
 ```bash
@@ -38,9 +38,9 @@ echo 'source ~/.clawdock/clawdock-helpers.sh' >> ~/.zshrc && source ~/.zshrc
 clawdock-help
 ```
 
-On first command, ClawDock auto-detects your OpenClaw directory:
+On first command, ClawDock auto-detects your MrHammadClaw directory:
 
-- Checks common paths (`~/openclaw`, `~/workspace/openclaw`, etc.)
+- Checks common paths (`~/mrhammadclaw`, `~/workspace/mrhammadclaw`, etc.)
 - If found, asks you to confirm
 - Saves to `~/.clawdock/config`
 
@@ -87,7 +87,7 @@ clawdock-approve <request-id>
 | Command                   | Description                                    |
 | ------------------------- | ---------------------------------------------- |
 | `clawdock-shell`          | Interactive shell inside the gateway container |
-| `clawdock-cli <command>`  | Run OpenClaw CLI commands                      |
+| `clawdock-cli <command>`  | Run MrHammadClaw CLI commands                  |
 | `clawdock-exec <command>` | Execute arbitrary commands in the container    |
 
 ### Web UI & Devices
@@ -113,14 +113,14 @@ clawdock-approve <request-id>
 
 ### Utilities
 
-| Command              | Description                               |
-| -------------------- | ----------------------------------------- |
-| `clawdock-health`    | Run gateway health check                  |
-| `clawdock-token`     | Display the gateway authentication token  |
-| `clawdock-cd`        | Jump to the OpenClaw project directory    |
-| `clawdock-config`    | Open the OpenClaw config directory        |
-| `clawdock-workspace` | Open the workspace directory              |
-| `clawdock-help`      | Show all available commands with examples |
+| Command              | Description                                |
+| -------------------- | ------------------------------------------ |
+| `clawdock-health`    | Run gateway health check                   |
+| `clawdock-token`     | Display the gateway authentication token   |
+| `clawdock-cd`        | Jump to the MrHammadClaw project directory |
+| `clawdock-config`    | Open the MrHammadClaw config directory     |
+| `clawdock-workspace` | Open the workspace directory               |
+| `clawdock-help`      | Show all available commands with examples  |
 
 ## Common Workflows
 
@@ -155,7 +155,7 @@ clawdock-shell
 **Inside the container, login to WhatsApp:**
 
 ```bash
-openclaw channels login --channel whatsapp --verbose
+mrhammadclaw channels login --channel whatsapp --verbose
 ```
 
 Scan the QR code with WhatsApp on your phone.
@@ -163,7 +163,7 @@ Scan the QR code with WhatsApp on your phone.
 **Verify connection:**
 
 ```bash
-openclaw status
+mrhammadclaw status
 ```
 
 ### Troubleshooting Device Pairing
@@ -193,7 +193,7 @@ clawdock-fix-token
 This will:
 
 1. Read the token from your `.env` file
-2. Configure it in the OpenClaw config
+2. Configure it in the MrHammadClaw config
 3. Restart the gateway
 4. Verify the configuration
 
@@ -209,7 +209,7 @@ docker ps
 
 - Docker and Docker Compose installed
 - Bash or Zsh shell
-- OpenClaw project (from `docker-setup.sh`)
+- MrHammadClaw project (from `docker-setup.sh`)
 
 ## Development
 

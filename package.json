@@ -1,20 +1,20 @@
 {
-  "name": "openclaw",
+  "name": "mrhammadclaw",
   "version": "2026.2.26",
-  "description": "Multi-channel AI gateway with extensible messaging integrations",
+  "description": "MrHammadClaw — personal AI gateway",
   "keywords": [],
-  "homepage": "https://github.com/openclaw/openclaw#readme",
+  "homepage": "https://github.com/hammadparveez/mrhammadclaw#readme",
   "bugs": {
-    "url": "https://github.com/openclaw/openclaw/issues"
+    "url": "https://github.com/hammadparveez/mrhammadclaw/issues"
   },
   "license": "MIT",
   "author": "",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/openclaw/openclaw.git"
+    "url": "git+https://github.com/hammadparveez/mrhammadclaw.git"
   },
   "bin": {
-    "openclaw": "openclaw.mjs"
+    "mrhammadclaw": "mrhammadclaw.mjs"
   },
   "directories": {
     "doc": "docs",
@@ -23,7 +23,7 @@
   "files": [
     "CHANGELOG.md",
     "LICENSE",
-    "openclaw.mjs",
+    "mrhammadclaw.mjs",
     "README-header.png",
     "README.md",
     "assets/",
@@ -44,12 +44,12 @@
       "types": "./dist/plugin-sdk/account-id.d.ts",
       "default": "./dist/plugin-sdk/account-id.js"
     },
-    "./cli-entry": "./openclaw.mjs"
+    "./cli-entry": "./mrhammadclaw.mjs"
   },
   "scripts": {
     "android:assemble": "cd apps/android && ./gradlew :app:assembleDebug",
     "android:install": "cd apps/android && ./gradlew :app:installDebug",
-    "android:run": "cd apps/android && ./gradlew :app:installDebug && adb shell am start -n ai.openclaw.android/.MainActivity",
+    "android:run": "cd apps/android && ./gradlew :app:installDebug && adb shell am start -n ai.mrhammadclaw.android/.MainActivity",
     "android:test": "cd apps/android && ./gradlew :app:testDebugUnitTest",
     "build": "pnpm canvas:a2ui:bundle && tsdown && pnpm build:plugin-sdk:dts && node --import tsx scripts/write-plugin-sdk-entry-dts.ts && node --import tsx scripts/canvas-a2ui-copy.ts && node --import tsx scripts/copy-hook-metadata.ts && node --import tsx scripts/copy-export-html-templates.ts && node --import tsx scripts/write-build-info.ts && node --import tsx scripts/write-cli-compat.ts",
     "build:plugin-sdk:dts": "tsc -p tsconfig.plugin-sdk.dts.json",
@@ -79,14 +79,14 @@
     "format:docs": "git ls-files 'docs/**/*.md' 'docs/**/*.mdx' 'README.md' | xargs oxfmt --write",
     "format:docs:check": "git ls-files 'docs/**/*.md' 'docs/**/*.mdx' 'README.md' | xargs oxfmt --check",
     "format:fix": "oxfmt --write",
-    "format:swift": "swiftformat --lint --config .swiftformat apps/macos/Sources apps/ios/Sources apps/shared/OpenClawKit/Sources",
-    "gateway:dev": "OPENCLAW_SKIP_CHANNELS=1 CLAWDBOT_SKIP_CHANNELS=1 node scripts/run-node.mjs --dev gateway",
-    "gateway:dev:reset": "OPENCLAW_SKIP_CHANNELS=1 CLAWDBOT_SKIP_CHANNELS=1 node scripts/run-node.mjs --dev gateway --reset",
+    "format:swift": "swiftformat --lint --config .swiftformat apps/macos/Sources apps/ios/Sources apps/shared/MrHammadClawKit/Sources",
+    "gateway:dev": "MRHAMMADCLAW_SKIP_CHANNELS=1 CLAWDBOT_SKIP_CHANNELS=1 node scripts/run-node.mjs --dev gateway",
+    "gateway:dev:reset": "MRHAMMADCLAW_SKIP_CHANNELS=1 CLAWDBOT_SKIP_CHANNELS=1 node scripts/run-node.mjs --dev gateway --reset",
     "gateway:watch": "node scripts/watch-node.mjs gateway --force",
-    "ios:build": "bash -lc './scripts/ios-configure-signing.sh && cd apps/ios && xcodegen generate && xcodebuild -project OpenClaw.xcodeproj -scheme OpenClaw -destination \"${IOS_DEST:-platform=iOS Simulator,name=iPhone 17}\" -configuration Debug build'",
+    "ios:build": "bash -lc './scripts/ios-configure-signing.sh && cd apps/ios && xcodegen generate && xcodebuild -project MrHammadClaw.xcodeproj -scheme MrHammadClaw -destination \"${IOS_DEST:-platform=iOS Simulator,name=iPhone 17}\" -configuration Debug build'",
     "ios:gen": "bash -lc './scripts/ios-configure-signing.sh && cd apps/ios && xcodegen generate'",
-    "ios:open": "bash -lc './scripts/ios-configure-signing.sh && cd apps/ios && xcodegen generate && open OpenClaw.xcodeproj'",
-    "ios:run": "bash -lc './scripts/ios-configure-signing.sh && cd apps/ios && xcodegen generate && xcodebuild -project OpenClaw.xcodeproj -scheme OpenClaw -destination \"${IOS_DEST:-platform=iOS Simulator,name=iPhone 17}\" -configuration Debug build && xcrun simctl boot \"${IOS_SIM:-iPhone 17}\" || true && xcrun simctl launch booted ai.openclaw.ios'",
+    "ios:open": "bash -lc './scripts/ios-configure-signing.sh && cd apps/ios && xcodegen generate && open MrHammadClaw.xcodeproj'",
+    "ios:run": "bash -lc './scripts/ios-configure-signing.sh && cd apps/ios && xcodegen generate && xcodebuild -project MrHammadClaw.xcodeproj -scheme MrHammadClaw -destination \"${IOS_DEST:-platform=iOS Simulator,name=iPhone 17}\" -configuration Debug build && xcrun simctl boot \"${IOS_SIM:-iPhone 17}\" || true && xcrun simctl launch booted ai.mrhammadclaw.ios'",
     "lint": "oxlint --type-aware",
     "lint:all": "pnpm lint && pnpm lint:swift",
     "lint:docs": "pnpm dlx markdownlint-cli2",
@@ -96,16 +96,16 @@
     "lint:tmp:channel-agnostic-boundaries": "node scripts/check-channel-agnostic-boundaries.mjs",
     "lint:tmp:no-random-messaging": "node scripts/check-no-random-messaging-tmp.mjs",
     "lint:ui:no-raw-window-open": "node scripts/check-no-raw-window-open.mjs",
-    "mac:open": "open dist/OpenClaw.app",
+    "mac:open": "open dist/MrHammadClaw.app",
     "mac:package": "bash scripts/package-mac-app.sh",
     "mac:restart": "bash scripts/restart-mac.sh",
     "moltbot:rpc": "node scripts/run-node.mjs agent --mode rpc --json",
-    "openclaw": "node scripts/run-node.mjs",
-    "openclaw:rpc": "node scripts/run-node.mjs agent --mode rpc --json",
+    "mrhammadclaw": "node scripts/run-node.mjs",
+    "mrhammadclaw:rpc": "node scripts/run-node.mjs agent --mode rpc --json",
     "plugins:sync": "node --import tsx scripts/sync-plugin-versions.ts",
     "prepack": "pnpm build && pnpm ui:build",
     "prepare": "command -v git >/dev/null 2>&1 && git rev-parse --is-inside-work-tree >/dev/null 2>&1 && git config core.hooksPath git-hooks || exit 0",
-    "protocol:check": "pnpm protocol:gen && pnpm protocol:gen:swift && git diff --exit-code -- dist/protocol.schema.json apps/macos/Sources/OpenClawProtocol/GatewayModels.swift",
+    "protocol:check": "pnpm protocol:gen && pnpm protocol:gen:swift && git diff --exit-code -- dist/protocol.schema.json apps/macos/Sources/MrHammadClawProtocol/GatewayModels.swift",
     "protocol:gen": "node --import tsx scripts/protocol-gen.ts",
     "protocol:gen:swift": "node --import tsx scripts/protocol-gen-swift.ts",
     "release:check": "node --import tsx scripts/release-check.ts",
@@ -126,16 +126,16 @@
     "test:fast": "vitest run --config vitest.unit.config.ts",
     "test:force": "node --import tsx scripts/test-force.ts",
     "test:install:e2e": "bash scripts/test-install-sh-e2e-docker.sh",
-    "test:install:e2e:anthropic": "OPENCLAW_E2E_MODELS=anthropic CLAWDBOT_E2E_MODELS=anthropic bash scripts/test-install-sh-e2e-docker.sh",
-    "test:install:e2e:openai": "OPENCLAW_E2E_MODELS=openai CLAWDBOT_E2E_MODELS=openai bash scripts/test-install-sh-e2e-docker.sh",
+    "test:install:e2e:anthropic": "MRHAMMADCLAW_E2E_MODELS=anthropic CLAWDBOT_E2E_MODELS=anthropic bash scripts/test-install-sh-e2e-docker.sh",
+    "test:install:e2e:openai": "MRHAMMADCLAW_E2E_MODELS=openai CLAWDBOT_E2E_MODELS=openai bash scripts/test-install-sh-e2e-docker.sh",
     "test:install:smoke": "bash scripts/test-install-sh-docker.sh",
-    "test:live": "OPENCLAW_LIVE_TEST=1 CLAWDBOT_LIVE_TEST=1 vitest run --config vitest.live.config.ts",
-    "test:macmini": "OPENCLAW_TEST_VM_FORKS=0 OPENCLAW_TEST_PROFILE=serial node scripts/test-parallel.mjs",
+    "test:live": "MRHAMMADCLAW_LIVE_TEST=1 CLAWDBOT_LIVE_TEST=1 vitest run --config vitest.live.config.ts",
+    "test:macmini": "MRHAMMADCLAW_TEST_VM_FORKS=0 MRHAMMADCLAW_TEST_PROFILE=serial node scripts/test-parallel.mjs",
     "test:ui": "pnpm lint:ui:no-raw-window-open && pnpm --dir ui test",
     "test:voicecall:closedloop": "vitest run extensions/voice-call/src/manager.test.ts extensions/voice-call/src/media-stream.test.ts src/plugins/voice-call.plugin.test.ts --maxWorkers=1",
     "test:watch": "vitest",
     "tui": "node scripts/run-node.mjs tui",
-    "tui:dev": "OPENCLAW_PROFILE=dev CLAWDBOT_PROFILE=dev node scripts/run-node.mjs --dev tui",
+    "tui:dev": "MRHAMMADCLAW_PROFILE=dev CLAWDBOT_PROFILE=dev node scripts/run-node.mjs --dev tui",
     "ui:build": "node scripts/ui.js build",
     "ui:dev": "node scripts/ui.js dev",
     "ui:install": "node scripts/ui.js install"

@@ -5,7 +5,7 @@ import { withTempHome as withTempHomeBase } from "../../test/helpers/temp-home.j
 import * as acpManagerModule from "../acp/control-plane/manager.js";
 import { AcpRuntimeError } from "../acp/runtime/errors.js";
 import * as embeddedModule from "../agents/pi-embedded.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { MrHammadClawConfig } from "../config/config.js";
 import * as configModule from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { agentCommand } from "./agent.js";
@@ -23,7 +23,7 @@ const runtime: RuntimeEnv = {
 };
 
 async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
-  return withTempHomeBase(fn, { prefix: "openclaw-agent-acp-" });
+  return withTempHomeBase(fn, { prefix: "mrhammadclaw-agent-acp-" });
 }
 
 function mockConfig(home: string, storePath: string) {
@@ -38,17 +38,17 @@ function mockConfig(home: string, storePath: string) {
       defaults: {
         model: { primary: "openai/gpt-5.3-codex" },
         models: { "openai/gpt-5.3-codex": {} },
-        workspace: path.join(home, "openclaw"),
+        workspace: path.join(home, "mrhammadclaw"),
       },
     },
     session: { store: storePath, mainKey: "main" },
-  } satisfies OpenClawConfig);
+  } satisfies MrHammadClawConfig);
 }
 
 function mockConfigWithAcpOverrides(
   home: string,
   storePath: string,
-  acpOverrides: Partial<NonNullable<OpenClawConfig["acp"]>>,
+  acpOverrides: Partial<NonNullable<MrHammadClawConfig["acp"]>>,
 ) {
   loadConfigSpy.mockReturnValue({
     acp: {
@@ -62,11 +62,11 @@ function mockConfigWithAcpOverrides(
       defaults: {
         model: { primary: "openai/gpt-5.3-codex" },
         models: { "openai/gpt-5.3-codex": {} },
-        workspace: path.join(home, "openclaw"),
+        workspace: path.join(home, "mrhammadclaw"),
       },
     },
     session: { store: storePath, mainKey: "main" },
-  } satisfies OpenClawConfig);
+  } satisfies MrHammadClawConfig);
 }
 
 function writeAcpSessionStore(storePath: string) {
@@ -115,7 +115,7 @@ function resolveReadySession(
 function mockAcpManager(params: {
   runTurn: (params: unknown) => Promise<void>;
   resolveSession?: (params: {
-    cfg: OpenClawConfig;
+    cfg: MrHammadClawConfig;
     sessionKey: string;
   }) => ReturnType<ReturnType<typeof acpManagerModule.getAcpSessionManager>["resolveSession"]>;
 }) {

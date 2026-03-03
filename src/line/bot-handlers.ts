@@ -7,7 +7,7 @@ import type {
   LeaveEvent,
   PostbackEvent,
 } from "@line/bot-sdk";
-import type { OpenClawConfig } from "../config/config.js";
+import type { MrHammadClawConfig } from "../config/config.js";
 import {
   resolveAllowlistProviderRuntimeGroupPolicy,
   resolveDefaultGroupPolicy,
@@ -43,7 +43,7 @@ interface MediaRef {
 }
 
 export interface LineHandlerContext {
-  cfg: OpenClawConfig;
+  cfg: MrHammadClawConfig;
   account: ResolvedLineAccount;
   runtime: RuntimeEnv;
   mediaMaxBytes: number;

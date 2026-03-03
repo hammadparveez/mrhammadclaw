@@ -29,17 +29,17 @@ describe("handleSystemRunInvoke mac app exec host routing", () => {
     approvals: Parameters<typeof saveExecApprovals>[0];
     run: (ctx: { tempHome: string }) => Promise<T>;
   }): Promise<T> {
-    const tempHome = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-exec-approvals-"));
-    const previousOpenClawHome = process.env.OPENCLAW_HOME;
-    process.env.OPENCLAW_HOME = tempHome;
+    const tempHome = fs.mkdtempSync(path.join(os.tmpdir(), "mrhammadclaw-exec-approvals-"));
+    const previousMrHammadClawHome = process.env.MRHAMMADCLAW_HOME;
+    process.env.MRHAMMADCLAW_HOME = tempHome;
     saveExecApprovals(params.approvals);
     try {
       return await params.run({ tempHome });
     } finally {
-      if (previousOpenClawHome === undefined) {
-        delete process.env.OPENCLAW_HOME;
+      if (previousMrHammadClawHome === undefined) {
+        delete process.env.MRHAMMADCLAW_HOME;
       } else {
-        process.env.OPENCLAW_HOME = previousOpenClawHome;
+        process.env.MRHAMMADCLAW_HOME = previousMrHammadClawHome;
       }
       fs.rmSync(tempHome, { recursive: true, force: true });
     }
@@ -220,7 +220,7 @@ describe("handleSystemRunInvoke mac app exec host routing", () => {
   it.runIf(process.platform !== "win32")(
     "denies approval-based execution when cwd is a symlink",
     async () => {
-      const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-approval-cwd-link-"));
+      const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "mrhammadclaw-approval-cwd-link-"));
       const safeDir = path.join(tmp, "safe");
       const linkDir = path.join(tmp, "cwd-link");
       const script = path.join(safeDir, "run.sh");
@@ -253,7 +253,7 @@ describe("handleSystemRunInvoke mac app exec host routing", () => {
   );
 
   it("uses canonical executable path for approval-based relative command execution", async () => {
-    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-approval-cwd-real-"));
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "mrhammadclaw-approval-cwd-real-"));
     const script = path.join(tmp, "run.sh");
     fs.writeFileSync(script, "#!/bin/sh\necho SAFE\n");
     fs.chmodSync(script, 0o755);
@@ -282,7 +282,10 @@ describe("handleSystemRunInvoke mac app exec host routing", () => {
     }
   });
   it("denies ./sh wrapper spoof in allowlist on-miss mode before execution", async () => {
-    const marker = path.join(os.tmpdir(), `openclaw-wrapper-spoof-${process.pid}-${Date.now()}`);
+    const marker = path.join(
+      os.tmpdir(),
+      `mrhammadclaw-wrapper-spoof-${process.pid}-${Date.now()}`,
+    );
     const runCommand = vi.fn(async () => {
       fs.writeFileSync(marker, "executed");
       return {
@@ -433,7 +436,7 @@ describe("handleSystemRunInvoke mac app exec host routing", () => {
   });
 
   it("denies semicolon-chained shell payloads in allowlist mode without explicit approval", async () => {
-    const payloads = ["openclaw status; id", "openclaw status; cat /etc/passwd"];
+    const payloads = ["mrhammadclaw status; id", "mrhammadclaw status; cat /etc/passwd"];
     for (const payload of payloads) {
       const command =
         process.platform === "win32"

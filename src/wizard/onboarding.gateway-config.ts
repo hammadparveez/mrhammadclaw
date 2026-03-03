@@ -4,7 +4,11 @@ import {
   validateGatewayPasswordInput,
 } from "../commands/onboard-helpers.js";
 import type { GatewayAuthChoice } from "../commands/onboard-types.js";
-import type { GatewayBindMode, GatewayTailscaleMode, OpenClawConfig } from "../config/config.js";
+import type {
+  GatewayBindMode,
+  GatewayTailscaleMode,
+  MrHammadClawConfig,
+} from "../config/config.js";
 import {
   TAILSCALE_DOCS_LINES,
   TAILSCALE_EXPOSURE_OPTIONS,
@@ -36,8 +40,8 @@ const DEFAULT_DANGEROUS_NODE_DENY_COMMANDS = [
 
 type ConfigureGatewayOptions = {
   flow: WizardFlow;
-  baseConfig: OpenClawConfig;
-  nextConfig: OpenClawConfig;
+  baseConfig: MrHammadClawConfig;
+  nextConfig: MrHammadClawConfig;
   localPort: number;
   quickstartGateway: QuickstartGatewayDefaults;
   prompter: WizardPrompter;
@@ -45,7 +49,7 @@ type ConfigureGatewayOptions = {
 };
 
 type ConfigureGatewayResult = {
-  nextConfig: OpenClawConfig;
+  nextConfig: MrHammadClawConfig;
   settings: GatewayWizardSettings;
 };
 

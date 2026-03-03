@@ -10,8 +10,8 @@ import type {
   AcpRuntimeStatus,
   AcpRuntimeTurnInput,
   PluginLogger,
-} from "openclaw/plugin-sdk";
-import { AcpRuntimeError } from "openclaw/plugin-sdk";
+} from "mrhammadclaw/plugin-sdk";
+import { AcpRuntimeError } from "mrhammadclaw/plugin-sdk";
 import {
   ACPX_LOCAL_INSTALL_COMMAND,
   ACPX_PINNED_VERSION,

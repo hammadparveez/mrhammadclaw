@@ -2,9 +2,9 @@
 // the agent reports a model id. This includes custom models.json entries.
 
 import { loadConfig } from "../config/config.js";
-import type { OpenClawConfig } from "../config/config.js";
-import { resolveOpenClawAgentDir } from "./agent-paths.js";
-import { ensureOpenClawModelsJson } from "./models-config.js";
+import type { MrHammadClawConfig } from "../config/config.js";
+import { resolveMrHammadClawAgentDir } from "./agent-paths.js";
+import { ensureMrHammadClawModelsJson } from "./models-config.js";
 
 type ModelEntry = { id: string; contextWindow?: number };
 type ModelRegistryLike = {
@@ -76,14 +76,14 @@ const loadPromise = (async () => {
   }
 
   try {
-    await ensureOpenClawModelsJson(cfg);
+    await ensureMrHammadClawModelsJson(cfg);
   } catch {
     // Continue with best-effort discovery/overrides.
   }
 
   try {
     const { discoverAuthStorage, discoverModels } = await import("./pi-model-discovery.js");
-    const agentDir = resolveOpenClawAgentDir();
+    const agentDir = resolveMrHammadClawAgentDir();
     const authStorage = discoverAuthStorage(agentDir);
     const modelRegistry = discoverModels(authStorage, agentDir) as unknown as ModelRegistryLike;
     const models =
@@ -116,7 +116,7 @@ export function lookupContextTokens(modelId?: string): number | undefined {
 }
 
 function resolveConfiguredModelParams(
-  cfg: OpenClawConfig | undefined,
+  cfg: MrHammadClawConfig | undefined,
   provider: string,
   model: string,
 ): Record<string, unknown> | undefined {
@@ -170,7 +170,7 @@ function isAnthropic1MModel(provider: string, model: string): boolean {
 }
 
 export function resolveContextTokensForModel(params: {
-  cfg?: OpenClawConfig;
+  cfg?: MrHammadClawConfig;
   provider?: string;
   model?: string;
   contextTokensOverride?: number;

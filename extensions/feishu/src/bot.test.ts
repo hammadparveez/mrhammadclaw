@@ -1,4 +1,4 @@
-import type { ClawdbotConfig, PluginRuntime, RuntimeEnv } from "openclaw/plugin-sdk";
+import type { ClawdbotConfig, PluginRuntime, RuntimeEnv } from "mrhammadclaw/plugin-sdk";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { FeishuMessageEvent } from "./bot.js";
 import { buildFeishuAgentBody, handleFeishuMessage } from "./bot.js";

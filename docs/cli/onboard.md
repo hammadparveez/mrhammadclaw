@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `openclaw onboard` (interactive onboarding wizard)"
+summary: "CLI reference for `mrhammadclaw onboard` (interactive onboarding wizard)"
 read_when:
   - You want guided setup for gateway, workspace, auth, channels, and skills
 title: "onboard"
 ---
 
-# `openclaw onboard`
+# `mrhammadclaw onboard`
 
 Interactive onboarding wizard (local or remote Gateway setup).
 
@@ -20,16 +20,16 @@ Interactive onboarding wizard (local or remote Gateway setup).
 ## Examples
 
 ```bash
-openclaw onboard
-openclaw onboard --flow quickstart
-openclaw onboard --flow manual
-openclaw onboard --mode remote --remote-url ws://gateway-host:18789
+mrhammadclaw onboard
+mrhammadclaw onboard --flow quickstart
+mrhammadclaw onboard --flow manual
+mrhammadclaw onboard --mode remote --remote-url ws://gateway-host:18789
 ```
 
 Non-interactive custom provider:
 
 ```bash
-openclaw onboard --non-interactive \
+mrhammadclaw onboard --non-interactive \
   --auth-choice custom-api-key \
   --custom-base-url "https://llm.example.com/v1" \
   --custom-model-id "foo-large" \
@@ -43,7 +43,7 @@ openclaw onboard --non-interactive \
 Store provider keys as refs instead of plaintext:
 
 ```bash
-openclaw onboard --non-interactive \
+mrhammadclaw onboard --non-interactive \
   --auth-choice openai-api-key \
   --secret-input-mode ref \
   --accept-risk
@@ -74,7 +74,7 @@ If you specifically want the GLM Coding Plan endpoints, pick `zai-coding-global`
 
 ```bash
 # Promptless endpoint selection
-openclaw onboard --non-interactive \
+mrhammadclaw onboard --non-interactive \
   --auth-choice zai-coding-global \
   --zai-api-key "$ZAI_API_KEY"
 
@@ -87,7 +87,7 @@ openclaw onboard --non-interactive \
 Non-interactive Mistral example:
 
 ```bash
-openclaw onboard --non-interactive \
+mrhammadclaw onboard --non-interactive \
   --auth-choice mistral-api-key \
   --mistral-api-key "$MISTRAL_API_KEY"
 ```
@@ -97,15 +97,15 @@ Flow notes:
 - `quickstart`: minimal prompts, auto-generates a gateway token.
 - `manual`: full prompts for port/bind/auth (alias of `advanced`).
 - Local onboarding DM scope behavior: [CLI Onboarding Reference](/start/wizard-cli-reference#outputs-and-internals).
-- Fastest first chat: `openclaw dashboard` (Control UI, no channel setup).
+- Fastest first chat: `mrhammadclaw dashboard` (Control UI, no channel setup).
 - Custom Provider: connect any OpenAI or Anthropic compatible endpoint,
   including hosted providers not listed. Use Unknown to auto-detect.
 
 ## Common follow-up commands
 
 ```bash
-openclaw configure
-openclaw agents add <name>
+mrhammadclaw configure
+mrhammadclaw agents add <name>
 ```
 
 <Note>

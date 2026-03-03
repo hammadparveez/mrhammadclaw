@@ -1,4 +1,4 @@
-import type { AnyAgentTool, OpenClawPluginApi } from "openclaw/plugin-sdk";
+import type { AnyAgentTool, MrHammadClawPluginApi } from "mrhammadclaw/plugin-sdk";
 
 type ToolContextLike = {
   agentAccountId?: string;
@@ -34,10 +34,10 @@ function asToolLike(tool: AnyAgentTool, fallbackName?: string): ToolLike {
   };
 }
 
-export function createToolFactoryHarness(cfg: OpenClawPluginApi["config"]) {
+export function createToolFactoryHarness(cfg: MrHammadClawPluginApi["config"]) {
   const registered: RegisteredTool[] = [];
 
-  const api: Pick<OpenClawPluginApi, "config" | "logger" | "registerTool"> = {
+  const api: Pick<MrHammadClawPluginApi, "config" | "logger" | "registerTool"> = {
     config: cfg,
     logger: {
       info: () => {},
@@ -70,7 +70,7 @@ export function createToolFactoryHarness(cfg: OpenClawPluginApi["config"]) {
   };
 
   return {
-    api: api as OpenClawPluginApi,
+    api: api as MrHammadClawPluginApi,
     resolveTool,
   };
 }

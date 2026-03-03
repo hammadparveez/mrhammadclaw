@@ -1,5 +1,5 @@
 ---
-summary: "CLI reference for `openclaw secrets` (reload, audit, configure, apply)"
+summary: "CLI reference for `mrhammadclaw secrets` (reload, audit, configure, apply)"
 read_when:
   - Re-resolving secret refs at runtime
   - Auditing plaintext residues and unresolved refs
@@ -7,7 +7,7 @@ read_when:
 title: "secrets"
 ---
 
-# `openclaw secrets`
+# `mrhammadclaw secrets`
 
 Secrets runtime controls.
 
@@ -21,8 +21,8 @@ Related:
 Re-resolve secret refs and atomically swap runtime snapshot.
 
 ```bash
-openclaw secrets reload
-openclaw secrets reload --json
+mrhammadclaw secrets reload
+mrhammadclaw secrets reload --json
 ```
 
 Notes:
@@ -33,7 +33,7 @@ Notes:
 
 ## Audit
 
-Scan OpenClaw state for:
+Scan MrHammadClaw state for:
 
 - plaintext secret storage
 - unresolved refs
@@ -41,9 +41,9 @@ Scan OpenClaw state for:
 - legacy residues (`auth.json`, OAuth out-of-scope notes)
 
 ```bash
-openclaw secrets audit
-openclaw secrets audit --check
-openclaw secrets audit --json
+mrhammadclaw secrets audit
+mrhammadclaw secrets audit --check
+mrhammadclaw secrets audit --json
 ```
 
 Exit behavior:
@@ -56,12 +56,12 @@ Exit behavior:
 Build provider + SecretRef changes interactively, run preflight, and optionally apply:
 
 ```bash
-openclaw secrets configure
-openclaw secrets configure --plan-out /tmp/openclaw-secrets-plan.json
-openclaw secrets configure --apply --yes
-openclaw secrets configure --providers-only
-openclaw secrets configure --skip-provider-setup
-openclaw secrets configure --json
+mrhammadclaw secrets configure
+mrhammadclaw secrets configure --plan-out /tmp/mrhammadclaw-secrets-plan.json
+mrhammadclaw secrets configure --apply --yes
+mrhammadclaw secrets configure --providers-only
+mrhammadclaw secrets configure --skip-provider-setup
+mrhammadclaw secrets configure --json
 ```
 
 Flow:
@@ -77,7 +77,7 @@ Flags:
 
 Notes:
 
-- `configure` targets secret-bearing fields in `openclaw.json`.
+- `configure` targets secret-bearing fields in `mrhammadclaw.json`.
 - Include all secret-bearing fields you intend to migrate (for example both `models.providers.*.apiKey` and `skills.entries.*.apiKey`) so audit can reach a clean state.
 - It performs preflight resolution before apply.
 - Apply path is one-way for migrated plaintext values.
@@ -92,9 +92,9 @@ Exec provider safety note:
 Apply or preflight a plan generated previously:
 
 ```bash
-openclaw secrets apply --from /tmp/openclaw-secrets-plan.json
-openclaw secrets apply --from /tmp/openclaw-secrets-plan.json --dry-run
-openclaw secrets apply --from /tmp/openclaw-secrets-plan.json --json
+mrhammadclaw secrets apply --from /tmp/mrhammadclaw-secrets-plan.json
+mrhammadclaw secrets apply --from /tmp/mrhammadclaw-secrets-plan.json --dry-run
+mrhammadclaw secrets apply --from /tmp/mrhammadclaw-secrets-plan.json --json
 ```
 
 Plan contract details (allowed target paths, validation rules, and failure semantics):
@@ -111,9 +111,9 @@ Safety comes from strict preflight + atomic-ish apply with best-effort in-memory
 
 ```bash
 # Audit first, then configure, then confirm clean:
-openclaw secrets audit --check
-openclaw secrets configure
-openclaw secrets audit --check
+mrhammadclaw secrets audit --check
+mrhammadclaw secrets configure
+mrhammadclaw secrets audit --check
 ```
 
 If `audit --check` still reports plaintext findings after a partial migration, verify you also migrated skill keys (`skills.entries.*.apiKey`) and any other reported target paths.

@@ -1,7 +1,7 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk";
+import type { MrHammadClawConfig } from "mrhammadclaw/plugin-sdk";
 import { expect, vi } from "vitest";
 
-export function createMattermostTestConfig(): OpenClawConfig {
+export function createMattermostTestConfig(): MrHammadClawConfig {
   return {
     channels: {
       mattermost: {

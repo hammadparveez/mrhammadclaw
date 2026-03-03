@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { MrHammadClawConfig } from "../../../config/config.js";
 import { DEFAULT_ACCOUNT_ID } from "../../../routing/session-key.js";
 import {
   listSlackAccountIds,
@@ -27,11 +27,11 @@ import {
 const channel = "slack" as const;
 
 function buildSlackManifest(botName: string) {
-  const safeName = botName.trim() || "OpenClaw";
+  const safeName = botName.trim() || "MrHammadClaw";
   const manifest = {
     display_information: {
       name: safeName,
-      description: `${safeName} connector for OpenClaw`,
+      description: `${safeName} connector for MrHammadClaw`,
     },
     features: {
       bot_user: {
@@ -44,8 +44,8 @@ function buildSlackManifest(botName: string) {
       },
       slash_commands: [
         {
-          command: "/openclaw",
-          description: "Send a message to OpenClaw",
+          command: "/mrhammadclaw",
+          description: "Send a message to MrHammadClaw",
           should_escape: false,
         },
       ],
@@ -134,10 +134,10 @@ async function promptSlackTokens(prompter: WizardPrompter): Promise<{
 }
 
 function setSlackChannelAllowlist(
-  cfg: OpenClawConfig,
+  cfg: MrHammadClawConfig,
   accountId: string,
   channelKeys: string[],
-): OpenClawConfig {
+): MrHammadClawConfig {
   const channels = Object.fromEntries(channelKeys.map((key) => [key, { allow: true }]));
   return patchChannelConfigForAccount({
     cfg,
@@ -148,10 +148,10 @@ function setSlackChannelAllowlist(
 }
 
 async function promptSlackAllowFrom(params: {
-  cfg: OpenClawConfig;
+  cfg: MrHammadClawConfig;
   prompter: WizardPrompter;
   accountId?: string;
-}): Promise<OpenClawConfig> {
+}): Promise<MrHammadClawConfig> {
   const accountId = resolveOnboardingAccountId({
     accountId: params.accountId,
     defaultAccountId: resolveDefaultSlackAccountId(params.cfg),
@@ -259,7 +259,7 @@ export const slackOnboardingAdapter: ChannelOnboardingAdapter = {
     const slackBotName = String(
       await prompter.text({
         message: "Slack bot display name (used for manifest)",
-        initialValue: "OpenClaw",
+        initialValue: "MrHammadClaw",
       }),
     ).trim();
     if (!accountConfigured) {

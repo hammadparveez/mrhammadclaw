@@ -14,11 +14,11 @@ export function resolveDefaultAgentWorkspaceDir(
   homedir: () => string = os.homedir,
 ): string {
   const home = resolveRequiredHomeDir(env, homedir);
-  const profile = env.OPENCLAW_PROFILE?.trim();
+  const profile = env.MRHAMMADCLAW_PROFILE?.trim();
   if (profile && profile.toLowerCase() !== "default") {
-    return path.join(home, ".openclaw", `workspace-${profile}`);
+    return path.join(home, ".mrhammadclaw", `workspace-${profile}`);
   }
-  return path.join(home, ".openclaw", "workspace");
+  return path.join(home, ".mrhammadclaw", "workspace");
 }
 
 export const DEFAULT_AGENT_WORKSPACE_DIR = resolveDefaultAgentWorkspaceDir();
@@ -31,7 +31,8 @@ export const DEFAULT_HEARTBEAT_FILENAME = "HEARTBEAT.md";
 export const DEFAULT_BOOTSTRAP_FILENAME = "BOOTSTRAP.md";
 export const DEFAULT_MEMORY_FILENAME = "MEMORY.md";
 export const DEFAULT_MEMORY_ALT_FILENAME = "memory.md";
-const WORKSPACE_STATE_DIRNAME = ".openclaw";
+export const DEFAULT_MEMORY_DIRNAME = "memory";
+const WORKSPACE_STATE_DIRNAME = ".mrhammadclaw";
 const WORKSPACE_STATE_FILENAME = "workspace-state.json";
 const WORKSPACE_STATE_VERSION = 1;
 
@@ -146,6 +147,17 @@ export type WorkspaceBootstrapFile = {
   content?: string;
   missing: boolean;
 };
+
+const DEFAULT_MEMORY_TEMPLATE = `# Long-term Memory
+
+## Preferences
+
+## Projects
+
+## Important Facts
+
+## Decisions
+`;
 
 export type ExtraBootstrapLoadDiagnosticCode =
   | "invalid-bootstrap-filename"
@@ -346,6 +358,8 @@ export async function ensureAgentWorkspace(params?: {
   const userPath = path.join(dir, DEFAULT_USER_FILENAME);
   const heartbeatPath = path.join(dir, DEFAULT_HEARTBEAT_FILENAME);
   const bootstrapPath = path.join(dir, DEFAULT_BOOTSTRAP_FILENAME);
+  const memoryPath = path.join(dir, DEFAULT_MEMORY_FILENAME);
+  const memoryDirPath = path.join(dir, DEFAULT_MEMORY_DIRNAME);
   const statePath = resolveWorkspaceStatePath(dir);
 
   const isBrandNewWorkspace = await (async () => {
@@ -375,6 +389,8 @@ export async function ensureAgentWorkspace(params?: {
   await writeFileIfMissing(identityPath, identityTemplate);
   await writeFileIfMissing(userPath, userTemplate);
   await writeFileIfMissing(heartbeatPath, heartbeatTemplate);
+  await writeFileIfMissing(memoryPath, DEFAULT_MEMORY_TEMPLATE);
+  await fs.mkdir(memoryDirPath, { recursive: true });
 
   let state = await readWorkspaceOnboardingState(statePath);
   let stateDirty = false;

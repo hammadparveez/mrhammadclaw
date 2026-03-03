@@ -87,6 +87,8 @@ export type CliBackendConfig = {
   imageMode?: "repeat" | "list";
   /** Serialize runs for this CLI. */
   serialize?: boolean;
+  /** Allow the CLI backend to use its built-in tools. Default: false. */
+  enableTools?: boolean;
   /** Runtime reliability tuning for this backend's process lifecycle. */
   reliability?: {
     /** No-output watchdog tuning (fresh vs resumed runs). */

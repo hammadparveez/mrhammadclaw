@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/types.js";
+import type { MrHammadClawConfig } from "../config/types.js";
 
 export type CommandScope = "text" | "native" | "both";
 
@@ -14,7 +14,7 @@ export type CommandCategory =
 export type CommandArgType = "string" | "number" | "boolean";
 
 export type CommandArgChoiceContext = {
-  cfg?: OpenClawConfig;
+  cfg?: MrHammadClawConfig;
   provider?: string;
   model?: string;
   command: ChatCommandDefinition;
@@ -80,7 +80,7 @@ export type CommandDetection = {
 };
 
 export type ShouldHandleTextCommandsParams = {
-  cfg: OpenClawConfig;
+  cfg: MrHammadClawConfig;
   surface: string;
   commandSource?: "text" | "native";
 };

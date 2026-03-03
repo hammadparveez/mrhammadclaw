@@ -2,7 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MrHammadClawConfig } from "../../config/config.js";
 
 const hoisted = vi.hoisted(() => {
   const sendMessageDiscord = vi.fn(async (_to: string, _text: string, _opts?: unknown) => ({}));
@@ -558,7 +558,7 @@ describe("thread binding ttl", () => {
     });
 
     const result = reconcileAcpThreadBindingsOnStartup({
-      cfg: {} as OpenClawConfig,
+      cfg: {} as MrHammadClawConfig,
       accountId: "default",
     });
 
@@ -593,7 +593,7 @@ describe("thread binding ttl", () => {
     hoisted.readAcpSessionEntry.mockReturnValue({
       sessionKey: "agent:codex:acp:uncertain",
       storeSessionKey: "agent:codex:acp:uncertain",
-      cfg: {} as OpenClawConfig,
+      cfg: {} as MrHammadClawConfig,
       storePath: "/tmp/mock-sessions.json",
       storeReadFailed: true,
       entry: undefined,
@@ -601,7 +601,7 @@ describe("thread binding ttl", () => {
     });
 
     const result = reconcileAcpThreadBindingsOnStartup({
-      cfg: {} as OpenClawConfig,
+      cfg: {} as MrHammadClawConfig,
       accountId: "default",
     });
 
@@ -612,9 +612,9 @@ describe("thread binding ttl", () => {
   });
 
   it("persists unbinds even when no manager is active", () => {
-    const previousStateDir = process.env.OPENCLAW_STATE_DIR;
-    const stateDir = fs.mkdtempSync(path.join(os.tmpdir(), "openclaw-thread-bindings-"));
-    process.env.OPENCLAW_STATE_DIR = stateDir;
+    const previousStateDir = process.env.MRHAMMADCLAW_STATE_DIR;
+    const stateDir = fs.mkdtempSync(path.join(os.tmpdir(), "mrhammadclaw-thread-bindings-"));
+    process.env.MRHAMMADCLAW_STATE_DIR = stateDir;
     try {
       __testing.resetThreadBindingsForTests();
       const bindingsPath = __testing.resolveThreadBindingsPath();
@@ -657,9 +657,9 @@ describe("thread binding ttl", () => {
     } finally {
       __testing.resetThreadBindingsForTests();
       if (previousStateDir === undefined) {
-        delete process.env.OPENCLAW_STATE_DIR;
+        delete process.env.MRHAMMADCLAW_STATE_DIR;
       } else {
-        process.env.OPENCLAW_STATE_DIR = previousStateDir;
+        process.env.MRHAMMADCLAW_STATE_DIR = previousStateDir;
       }
       fs.rmSync(stateDir, { recursive: true, force: true });
     }

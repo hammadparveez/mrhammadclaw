@@ -1,11 +1,11 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk";
+import type { MrHammadClawConfig } from "mrhammadclaw/plugin-sdk";
 import { resolveBlueBubblesAccount } from "./accounts.js";
 
 export type BlueBubblesAccountResolveOpts = {
   serverUrl?: string;
   password?: string;
   accountId?: string;
-  cfg?: OpenClawConfig;
+  cfg?: MrHammadClawConfig;
 };
 
 export function resolveBlueBubblesServerAccount(params: BlueBubblesAccountResolveOpts): {

@@ -4,7 +4,7 @@ import path from "node:path";
 import { CURRENT_SESSION_VERSION, SessionManager } from "@mariozechner/pi-coding-agent";
 import { resolveSessionAgentId } from "../../agents/agent-scope.js";
 import { normalizeChatType } from "../../channels/chat-type.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { MrHammadClawConfig } from "../../config/config.js";
 import {
   DEFAULT_RESET_TRIGGERS,
   deriveSessionMetaPatch,
@@ -112,7 +112,7 @@ export type SessionInitResult = {
  */
 const DEFAULT_PARENT_FORK_MAX_TOKENS = 100_000;
 
-function resolveParentForkMaxTokens(cfg: OpenClawConfig): number {
+function resolveParentForkMaxTokens(cfg: MrHammadClawConfig): number {
   const configured = cfg.session?.parentForkMaxTokens;
   if (typeof configured === "number" && Number.isFinite(configured) && configured >= 0) {
     return Math.floor(configured);
@@ -164,7 +164,7 @@ function forkSessionFromParent(params: {
 
 export async function initSessionState(params: {
   ctx: MsgContext;
-  cfg: OpenClawConfig;
+  cfg: MrHammadClawConfig;
   commandAuthorized: boolean;
 }): Promise<SessionInitResult> {
   const { ctx, cfg, commandAuthorized } = params;

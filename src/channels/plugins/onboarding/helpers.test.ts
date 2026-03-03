@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { MrHammadClawConfig } from "../../../config/config.js";
 import { DEFAULT_ACCOUNT_ID } from "../../../routing/session-key.js";
 
 const promptAccountIdSdkMock = vi.hoisted(() => vi.fn(async () => "default"));
@@ -101,7 +101,7 @@ async function runPromptSingleToken(params: {
 }
 
 async function runPromptLegacyAllowFrom(params: {
-  cfg?: OpenClawConfig;
+  cfg?: MrHammadClawConfig;
   channel: "discord" | "slack";
   prompter: ReturnType<typeof createPrompter>;
   existing: string[];
@@ -202,7 +202,7 @@ describe("promptLegacyChannelAllowFrom", () => {
     const resolveEntries = vi.fn();
 
     const next = await runPromptLegacyAllowFrom({
-      cfg: {} as OpenClawConfig,
+      cfg: {} as MrHammadClawConfig,
       channel: "discord",
       existing: ["999"],
       prompter,
@@ -223,7 +223,7 @@ describe("promptLegacyChannelAllowFrom", () => {
     const resolveEntries = vi.fn(async () => [{ input: "alice", resolved: true, id: "U1" }]);
 
     const next = await runPromptLegacyAllowFrom({
-      cfg: {} as OpenClawConfig,
+      cfg: {} as MrHammadClawConfig,
       channel: "slack",
       prompter,
       existing: [],
@@ -318,7 +318,7 @@ describe("applySingleTokenPromptResult", () => {
 
 describe("promptParsedAllowFromForScopedChannel", () => {
   it("writes parsed allowFrom values to default account channel config", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MrHammadClawConfig = {
       channels: {
         imessage: {
           allowFrom: ["old"],
@@ -346,7 +346,7 @@ describe("promptParsedAllowFromForScopedChannel", () => {
   });
 
   it("writes parsed values to non-default account allowFrom", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MrHammadClawConfig = {
       channels: {
         signal: {
           accounts: {
@@ -454,7 +454,7 @@ describe("channel lookup note helpers", () => {
 
 describe("setAccountAllowFromForChannel", () => {
   it("writes allowFrom on default account channel config", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MrHammadClawConfig = {
       channels: {
         imessage: {
           enabled: true,
@@ -478,7 +478,7 @@ describe("setAccountAllowFromForChannel", () => {
   });
 
   it("writes allowFrom on nested non-default account config", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MrHammadClawConfig = {
       channels: {
         signal: {
           enabled: true,
@@ -505,7 +505,7 @@ describe("setAccountAllowFromForChannel", () => {
 
 describe("patchChannelConfigForAccount", () => {
   it("patches root channel config for default account", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MrHammadClawConfig = {
       channels: {
         telegram: {
           enabled: false,
@@ -527,7 +527,7 @@ describe("patchChannelConfigForAccount", () => {
   });
 
   it("patches nested account config and preserves existing enabled flag", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MrHammadClawConfig = {
       channels: {
         slack: {
           enabled: true,
@@ -555,7 +555,7 @@ describe("patchChannelConfigForAccount", () => {
   });
 
   it("moves single-account config into default account when patching non-default", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MrHammadClawConfig = {
       channels: {
         telegram: {
           enabled: true,
@@ -588,7 +588,7 @@ describe("patchChannelConfigForAccount", () => {
   });
 
   it("supports imessage/signal account-scoped channel patches", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MrHammadClawConfig = {
       channels: {
         signal: {
           enabled: false,
@@ -623,7 +623,7 @@ describe("patchChannelConfigForAccount", () => {
 
 describe("setOnboardingChannelEnabled", () => {
   it("updates enabled and keeps existing channel fields", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MrHammadClawConfig = {
       channels: {
         discord: {
           enabled: true,
@@ -645,7 +645,7 @@ describe("setOnboardingChannelEnabled", () => {
 
 describe("patchLegacyDmChannelConfig", () => {
   it("patches discord root config and defaults dm.enabled to true", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MrHammadClawConfig = {
       channels: {
         discord: {
           dmPolicy: "pairing",
@@ -663,7 +663,7 @@ describe("patchLegacyDmChannelConfig", () => {
   });
 
   it("preserves explicit dm.enabled=false for slack", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MrHammadClawConfig = {
       channels: {
         slack: {
           dm: {
@@ -685,7 +685,7 @@ describe("patchLegacyDmChannelConfig", () => {
 
 describe("setLegacyChannelDmPolicyWithAllowFrom", () => {
   it("adds wildcard allowFrom for open policy using legacy dm allowFrom fallback", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MrHammadClawConfig = {
       channels: {
         discord: {
           dm: {
@@ -707,7 +707,7 @@ describe("setLegacyChannelDmPolicyWithAllowFrom", () => {
   });
 
   it("sets policy without changing allowFrom when not open", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MrHammadClawConfig = {
       channels: {
         slack: {
           allowFrom: ["U1"],
@@ -763,7 +763,7 @@ describe("setAccountGroupPolicyForChannel", () => {
 
 describe("setChannelDmPolicyWithAllowFrom", () => {
   it("adds wildcard allowFrom when setting dmPolicy=open", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MrHammadClawConfig = {
       channels: {
         signal: {
           dmPolicy: "pairing",
@@ -783,7 +783,7 @@ describe("setChannelDmPolicyWithAllowFrom", () => {
   });
 
   it("sets dmPolicy without changing allowFrom for non-open policies", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MrHammadClawConfig = {
       channels: {
         imessage: {
           dmPolicy: "open",
@@ -803,7 +803,7 @@ describe("setChannelDmPolicyWithAllowFrom", () => {
   });
 
   it("supports telegram channel dmPolicy updates", () => {
-    const cfg: OpenClawConfig = {
+    const cfg: MrHammadClawConfig = {
       channels: {
         telegram: {
           dmPolicy: "pairing",

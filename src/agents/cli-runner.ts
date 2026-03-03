@@ -1,7 +1,7 @@
 import type { ImageContent } from "@mariozechner/pi-ai";
 import { resolveHeartbeatPrompt } from "../auto-reply/heartbeat.js";
 import type { ThinkLevel } from "../auto-reply/thinking.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { MrHammadClawConfig } from "../config/config.js";
 import { shouldLogVerbose } from "../globals.js";
 import { isTruthyEnvValue } from "../infra/env.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
@@ -24,7 +24,7 @@ import {
   resolveSystemPromptUsage,
   writeCliImages,
 } from "./cli-runner/helpers.js";
-import { resolveOpenClawDocsPath } from "./docs-path.js";
+import { resolveMrHammadClawDocsPath } from "./docs-path.js";
 import { FailoverError, resolveFailoverStatus } from "./failover-error.js";
 import { classifyFailoverReason, isFailoverErrorMessage } from "./pi-embedded-helpers.js";
 import type { EmbeddedPiRunResult } from "./pi-embedded-runner.js";
@@ -38,7 +38,7 @@ export async function runCliAgent(params: {
   agentId?: string;
   sessionFile: string;
   workspaceDir: string;
-  config?: OpenClawConfig;
+  config?: MrHammadClawConfig;
   prompt: string;
   provider: string;
   model?: string;
@@ -78,10 +78,10 @@ export async function runCliAgent(params: {
   const normalizedModel = normalizeCliModel(modelId, backend);
   const modelDisplay = `${params.provider}/${modelId}`;
 
-  const extraSystemPrompt = [
-    params.extraSystemPrompt?.trim(),
-    "Tools are disabled in this session. Do not call tools.",
-  ]
+  const toolsDisabledHint = backend.enableTools
+    ? undefined
+    : "Tools are disabled in this session. Do not call tools.";
+  const extraSystemPrompt = [params.extraSystemPrompt?.trim(), toolsDisabledHint]
     .filter(Boolean)
     .join("\n");
 
@@ -102,7 +102,7 @@ export async function runCliAgent(params: {
     sessionAgentId === defaultAgentId
       ? resolveHeartbeatPrompt(params.config?.agents?.defaults?.heartbeat?.prompt)
       : undefined;
-  const docsPath = await resolveOpenClawDocsPath({
+  const docsPath = await resolveMrHammadClawDocsPath({
     workspaceDir,
     argv1: process.argv[1],
     cwd: process.cwd(),
@@ -183,7 +183,7 @@ export async function runCliAgent(params: {
       log.info(
         `cli exec: provider=${params.provider} model=${normalizedModel} promptChars=${params.prompt.length}`,
       );
-      const logOutputText = isTruthyEnvValue(process.env.OPENCLAW_CLAUDE_CLI_LOG_OUTPUT);
+      const logOutputText = isTruthyEnvValue(process.env.MRHAMMADCLAW_CLAUDE_CLI_LOG_OUTPUT);
       if (logOutputText) {
         const logArgs: string[] = [];
         for (let i = 0; i < args.length; i += 1) {
@@ -296,6 +296,62 @@ export async function runCliAgent(params: {
           });
         }
         const err = stderr || stdout || "CLI failed.";
+
+        // If resume failed because the session doesn't exist in Claude CLI,
+        // retry as a fresh session instead of propagating the error.
+        const isSessionNotFound = useResume && /no conversation found with session id/i.test(err);
+        if (isSessionNotFound) {
+          log.warn(
+            `cli session not found, retrying as fresh session: provider=${params.provider} model=${modelId} staleSession=${cliSessionIdToSend}`,
+          );
+          const freshArgs = buildCliArgs({
+            backend,
+            baseArgs: backend.args ?? [],
+            modelId: normalizedModel,
+            sessionId: cliSessionIdToSend,
+            systemPrompt: systemPromptArg,
+            imagePaths,
+            promptArg: argsPrompt,
+            useResume: false,
+          });
+          const freshRun = await supervisor.spawn({
+            sessionId: params.sessionId,
+            backendId: backendResolved.id,
+            scopeKey,
+            replaceExistingScope: true,
+            mode: "child",
+            argv: [backend.command, ...freshArgs],
+            timeoutMs: params.timeoutMs,
+            noOutputTimeoutMs,
+            cwd: workspaceDir,
+            env,
+            input: stdinPayload,
+          });
+          const freshResult = await freshRun.wait();
+          const freshStdout = freshResult.stdout.trim();
+          const freshStderr = freshResult.stderr.trim();
+          if (freshResult.exitCode !== 0 || freshResult.reason !== "exit") {
+            const freshErr = freshStderr || freshStdout || "CLI failed (fresh retry).";
+            const freshReason = classifyFailoverReason(freshErr) ?? "unknown";
+            throw new FailoverError(freshErr, {
+              reason: freshReason,
+              provider: params.provider,
+              model: modelId,
+              status: resolveFailoverStatus(freshReason),
+            });
+          }
+          const freshOutputMode = backend.output;
+          if (freshOutputMode === "text") {
+            return { text: freshStdout, sessionId: undefined };
+          }
+          if (freshOutputMode === "jsonl") {
+            const parsed = parseCliJsonl(freshStdout, backend);
+            return parsed ?? { text: freshStdout };
+          }
+          const parsed = parseCliJson(freshStdout, backend);
+          return parsed ?? { text: freshStdout };
+        }
+
         const reason = classifyFailoverReason(err) ?? "unknown";
         const status = resolveFailoverStatus(reason);
         throw new FailoverError(err, {
@@ -364,7 +420,7 @@ export async function runClaudeCliAgent(params: {
   agentId?: string;
   sessionFile: string;
   workspaceDir: string;
-  config?: OpenClawConfig;
+  config?: MrHammadClawConfig;
   prompt: string;
   provider?: string;
   model?: string;

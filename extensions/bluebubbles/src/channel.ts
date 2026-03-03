@@ -1,4 +1,8 @@
-import type { ChannelAccountSnapshot, ChannelPlugin, OpenClawConfig } from "openclaw/plugin-sdk";
+import type {
+  ChannelAccountSnapshot,
+  ChannelPlugin,
+  MrHammadClawConfig,
+} from "mrhammadclaw/plugin-sdk";
 import {
   applyAccountNameToChannelSection,
   buildChannelConfigSchema,
@@ -12,7 +16,7 @@ import {
   resolveBlueBubblesGroupRequireMention,
   resolveBlueBubblesGroupToolPolicy,
   setAccountEnabledInConfigSection,
-} from "openclaw/plugin-sdk";
+} from "mrhammadclaw/plugin-sdk";
 import {
   listBlueBubblesAccountIds,
   type ResolvedBlueBubblesAccount,
@@ -262,7 +266,7 @@ export const bluebubblesPlugin: ChannelPlugin<ResolvedBlueBubblesAccount> = {
               ...(input.webhookPath ? { webhookPath: input.webhookPath } : {}),
             },
           },
-        } as OpenClawConfig;
+        } as MrHammadClawConfig;
       }
       return {
         ...next,
@@ -283,7 +287,7 @@ export const bluebubblesPlugin: ChannelPlugin<ResolvedBlueBubblesAccount> = {
             },
           },
         },
-      } as OpenClawConfig;
+      } as MrHammadClawConfig;
     },
   },
   pairing: {

@@ -1,6 +1,6 @@
-name: OpenClaw
+name: MrHammadClaw
 options:
-  bundleIdPrefix: ai.openclaw
+  bundleIdPrefix: ai.mrhammadclaw
   deploymentTarget:
     iOS: "18.0"
   xcodeVersion: "16.0"
@@ -10,23 +10,23 @@ settings:
     SWIFT_VERSION: "6.0"
 
 packages:
-  OpenClawKit:
-    path: ../shared/OpenClawKit
+  MrHammadClawKit:
+    path: ../shared/MrHammadClawKit
   Swabble:
     path: ../../Swabble
 
 schemes:
-  OpenClaw:
+  MrHammadClaw:
     shared: true
     build:
       targets:
-        OpenClaw: all
+        MrHammadClaw: all
     test:
       targets:
-        - OpenClawTests
+        - MrHammadClawTests
 
 targets:
-  OpenClaw:
+  MrHammadClaw:
     type: application
     platform: iOS
     configFiles:
@@ -35,14 +35,14 @@ targets:
     sources:
       - path: Sources
     dependencies:
-      - target: OpenClawShareExtension
+      - target: MrHammadClawShareExtension
         embed: true
-      - target: OpenClawWatchApp
-      - package: OpenClawKit
-      - package: OpenClawKit
-        product: OpenClawChatUI
-      - package: OpenClawKit
-        product: OpenClawProtocol
+      - target: MrHammadClawWatchApp
+      - package: MrHammadClawKit
+      - package: MrHammadClawKit
+        product: MrHammadClawChatUI
+      - package: MrHammadClawKit
+        product: MrHammadClawProtocol
       - package: Swabble
         product: SwabbleKit
       - sdk: AppIntents.framework
@@ -75,23 +75,23 @@ targets:
     settings:
       base:
         CODE_SIGN_IDENTITY: "Apple Development"
-        CODE_SIGN_ENTITLEMENTS: Sources/OpenClaw.entitlements
-        CODE_SIGN_STYLE: "$(OPENCLAW_CODE_SIGN_STYLE)"
-        DEVELOPMENT_TEAM: "$(OPENCLAW_DEVELOPMENT_TEAM)"
-        PRODUCT_BUNDLE_IDENTIFIER: "$(OPENCLAW_APP_BUNDLE_ID)"
-        PROVISIONING_PROFILE_SPECIFIER: "$(OPENCLAW_APP_PROFILE)"
+        CODE_SIGN_ENTITLEMENTS: Sources/MrHammadClaw.entitlements
+        CODE_SIGN_STYLE: "$(MRHAMMADCLAW_CODE_SIGN_STYLE)"
+        DEVELOPMENT_TEAM: "$(MRHAMMADCLAW_DEVELOPMENT_TEAM)"
+        PRODUCT_BUNDLE_IDENTIFIER: "$(MRHAMMADCLAW_APP_BUNDLE_ID)"
+        PROVISIONING_PROFILE_SPECIFIER: "$(MRHAMMADCLAW_APP_PROFILE)"
         SWIFT_VERSION: "6.0"
         SWIFT_STRICT_CONCURRENCY: complete
         ENABLE_APPINTENTS_METADATA: NO
     info:
       path: Sources/Info.plist
       properties:
-        CFBundleDisplayName: OpenClaw
+        CFBundleDisplayName: MrHammadClaw
         CFBundleIconName: AppIcon
         CFBundleURLTypes:
-          - CFBundleURLName: ai.openclaw.ios
+          - CFBundleURLName: ai.mrhammadclaw.ios
             CFBundleURLSchemes:
-              - openclaw
+              - mrhammadclaw
         CFBundleShortVersionString: "2026.2.26"
         CFBundleVersion: "20260226"
         UILaunchScreen: {}
@@ -101,17 +101,17 @@ targets:
           - audio
           - remote-notification
         BGTaskSchedulerPermittedIdentifiers:
-          - ai.openclaw.ios.bgrefresh
-        NSLocalNetworkUsageDescription: OpenClaw discovers and connects to your OpenClaw gateway on the local network.
+          - ai.mrhammadclaw.ios.bgrefresh
+        NSLocalNetworkUsageDescription: MrHammadClaw discovers and connects to your MrHammadClaw gateway on the local network.
         NSAppTransportSecurity:
           NSAllowsArbitraryLoadsInWebContent: true
         NSBonjourServices:
-          - _openclaw-gw._tcp
-        NSCameraUsageDescription: OpenClaw can capture photos or short video clips when requested via the gateway.
-        NSLocationWhenInUseUsageDescription: OpenClaw uses your location when you allow location sharing.
-        NSLocationAlwaysAndWhenInUseUsageDescription: OpenClaw can share your location in the background when you enable Always.
-        NSMicrophoneUsageDescription: OpenClaw needs microphone access for voice wake.
-        NSSpeechRecognitionUsageDescription: OpenClaw uses on-device speech recognition for voice wake.
+          - _mrhammadclaw-gw._tcp
+        NSCameraUsageDescription: MrHammadClaw can capture photos or short video clips when requested via the gateway.
+        NSLocationWhenInUseUsageDescription: MrHammadClaw uses your location when you allow location sharing.
+        NSLocationAlwaysAndWhenInUseUsageDescription: MrHammadClaw can share your location in the background when you enable Always.
+        NSMicrophoneUsageDescription: MrHammadClaw needs microphone access for voice wake.
+        NSSpeechRecognitionUsageDescription: MrHammadClaw uses on-device speech recognition for voice wake.
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
           - UIInterfaceOrientationPortraitUpsideDown
@@ -123,7 +123,7 @@ targets:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
 
-  OpenClawShareExtension:
+  MrHammadClawShareExtension:
     type: app-extension
     platform: iOS
     configFiles:
@@ -132,20 +132,20 @@ targets:
     sources:
       - path: ShareExtension
     dependencies:
-      - package: OpenClawKit
+      - package: MrHammadClawKit
     settings:
       base:
         CODE_SIGN_IDENTITY: "Apple Development"
-        CODE_SIGN_STYLE: "$(OPENCLAW_CODE_SIGN_STYLE)"
-        DEVELOPMENT_TEAM: "$(OPENCLAW_DEVELOPMENT_TEAM)"
-        PRODUCT_BUNDLE_IDENTIFIER: "$(OPENCLAW_SHARE_BUNDLE_ID)"
-        PROVISIONING_PROFILE_SPECIFIER: "$(OPENCLAW_SHARE_PROFILE)"
+        CODE_SIGN_STYLE: "$(MRHAMMADCLAW_CODE_SIGN_STYLE)"
+        DEVELOPMENT_TEAM: "$(MRHAMMADCLAW_DEVELOPMENT_TEAM)"
+        PRODUCT_BUNDLE_IDENTIFIER: "$(MRHAMMADCLAW_SHARE_BUNDLE_ID)"
+        PROVISIONING_PROFILE_SPECIFIER: "$(MRHAMMADCLAW_SHARE_PROFILE)"
         SWIFT_VERSION: "6.0"
         SWIFT_STRICT_CONCURRENCY: complete
     info:
       path: ShareExtension/Info.plist
       properties:
-        CFBundleDisplayName: OpenClaw Share
+        CFBundleDisplayName: MrHammadClaw Share
         CFBundleShortVersionString: "2026.2.26"
         CFBundleVersion: "20260226"
         NSExtension:
@@ -158,30 +158,30 @@ targets:
               NSExtensionActivationSupportsImageWithMaxCount: 10
               NSExtensionActivationSupportsMovieWithMaxCount: 1
 
-  OpenClawWatchApp:
+  MrHammadClawWatchApp:
     type: application.watchapp2
     platform: watchOS
     deploymentTarget: "11.0"
     sources:
       - path: WatchApp
     dependencies:
-      - target: OpenClawWatchExtension
+      - target: MrHammadClawWatchExtension
     configFiles:
       Debug: Config/Signing.xcconfig
       Release: Config/Signing.xcconfig
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: "$(OPENCLAW_WATCH_APP_BUNDLE_ID)"
+        PRODUCT_BUNDLE_IDENTIFIER: "$(MRHAMMADCLAW_WATCH_APP_BUNDLE_ID)"
     info:
       path: WatchApp/Info.plist
       properties:
-        CFBundleDisplayName: OpenClaw
+        CFBundleDisplayName: MrHammadClaw
         CFBundleShortVersionString: "2026.2.26"
         CFBundleVersion: "20260226"
-        WKCompanionAppBundleIdentifier: "$(OPENCLAW_APP_BUNDLE_ID)"
+        WKCompanionAppBundleIdentifier: "$(MRHAMMADCLAW_APP_BUNDLE_ID)"
         WKWatchKitApp: true
 
-  OpenClawWatchExtension:
+  MrHammadClawWatchExtension:
     type: watchkit2-extension
     platform: watchOS
     deploymentTarget: "11.0"
@@ -195,19 +195,19 @@ targets:
       Release: Config/Signing.xcconfig
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: "$(OPENCLAW_WATCH_EXTENSION_BUNDLE_ID)"
+        PRODUCT_BUNDLE_IDENTIFIER: "$(MRHAMMADCLAW_WATCH_EXTENSION_BUNDLE_ID)"
     info:
       path: WatchExtension/Info.plist
       properties:
-        CFBundleDisplayName: OpenClaw
+        CFBundleDisplayName: MrHammadClaw
         CFBundleShortVersionString: "2026.2.26"
         CFBundleVersion: "20260226"
         NSExtension:
           NSExtensionAttributes:
-            WKAppBundleIdentifier: "$(OPENCLAW_WATCH_APP_BUNDLE_ID)"
+            WKAppBundleIdentifier: "$(MRHAMMADCLAW_WATCH_APP_BUNDLE_ID)"
           NSExtensionPointIdentifier: com.apple.watchkit
 
-  OpenClawTests:
+  MrHammadClawTests:
     type: bundle.unit-test
     platform: iOS
     configFiles:
@@ -216,23 +216,23 @@ targets:
     sources:
       - path: Tests
     dependencies:
-      - target: OpenClaw
+      - target: MrHammadClaw
       - package: Swabble
         product: SwabbleKit
       - sdk: AppIntents.framework
     settings:
       base:
         CODE_SIGN_IDENTITY: "Apple Development"
-        CODE_SIGN_STYLE: "$(OPENCLAW_CODE_SIGN_STYLE)"
-        DEVELOPMENT_TEAM: "$(OPENCLAW_DEVELOPMENT_TEAM)"
-        PRODUCT_BUNDLE_IDENTIFIER: ai.openclaw.ios.tests
+        CODE_SIGN_STYLE: "$(MRHAMMADCLAW_CODE_SIGN_STYLE)"
+        DEVELOPMENT_TEAM: "$(MRHAMMADCLAW_DEVELOPMENT_TEAM)"
+        PRODUCT_BUNDLE_IDENTIFIER: ai.mrhammadclaw.ios.tests
         SWIFT_VERSION: "6.0"
         SWIFT_STRICT_CONCURRENCY: complete
-        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/OpenClaw.app/OpenClaw"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/MrHammadClaw.app/MrHammadClaw"
         BUNDLE_LOADER: "$(TEST_HOST)"
     info:
       path: Tests/Info.plist
       properties:
-        CFBundleDisplayName: OpenClawTests
+        CFBundleDisplayName: MrHammadClawTests
         CFBundleShortVersionString: "2026.2.26"
         CFBundleVersion: "20260226"

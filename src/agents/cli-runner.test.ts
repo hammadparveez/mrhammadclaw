@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { MrHammadClawConfig } from "../config/config.js";
 import { runCliAgent } from "./cli-runner.js";
 import { resolveCliNoOutputTimeoutMs } from "./cli-runner/helpers.js";
 
@@ -154,7 +154,7 @@ describe("runCliAgent with process supervisor", () => {
   });
 
   it("falls back to per-agent workspace when workspaceDir is missing", async () => {
-    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-cli-runner-"));
+    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "mrhammadclaw-cli-runner-"));
     const fallbackWorkspace = path.join(tempDir, "workspace-main");
     await fs.mkdir(fallbackWorkspace, { recursive: true });
     const cfg = {
@@ -163,7 +163,7 @@ describe("runCliAgent with process supervisor", () => {
           workspace: fallbackWorkspace,
         },
       },
-    } satisfies OpenClawConfig;
+    } satisfies MrHammadClawConfig;
 
     supervisorSpawnMock.mockResolvedValueOnce(
       createManagedRun({
@@ -197,6 +197,109 @@ describe("runCliAgent with process supervisor", () => {
 
     const input = supervisorSpawnMock.mock.calls[0]?.[0] as { cwd?: string };
     expect(input.cwd).toBe(path.resolve(fallbackWorkspace));
+  });
+});
+
+describe("enableTools system prompt behavior", () => {
+  beforeEach(() => {
+    supervisorSpawnMock.mockClear();
+  });
+
+  function mockSuccessfulRun() {
+    supervisorSpawnMock.mockResolvedValueOnce(
+      createManagedRun({
+        reason: "exit",
+        exitCode: 0,
+        exitSignal: null,
+        durationMs: 30,
+        stdout: JSON.stringify({ result: "ok", session_id: "sess-1" }),
+        stderr: "",
+        timedOut: false,
+        noOutputTimedOut: false,
+      }),
+    );
+  }
+
+  function extractSystemPromptArg(): string | undefined {
+    const input = supervisorSpawnMock.mock.calls[0]?.[0] as { argv?: string[] };
+    const argv = input.argv ?? [];
+    const idx = argv.indexOf("--append-system-prompt");
+    return idx >= 0 ? argv[idx + 1] : undefined;
+  }
+
+  it("includes tools-disabled hint when enableTools is not set", async () => {
+    mockSuccessfulRun();
+    await runCliAgent({
+      sessionId: "s1",
+      sessionFile: "/tmp/session.jsonl",
+      workspaceDir: "/tmp",
+      prompt: "hi",
+      provider: "claude-cli",
+      model: "opus",
+      timeoutMs: 5_000,
+      runId: "run-tools-default",
+    });
+    const systemPrompt = extractSystemPromptArg();
+    expect(systemPrompt).toBeDefined();
+    expect(systemPrompt).toContain("Tools are disabled in this session");
+  });
+
+  it("omits tools-disabled hint when enableTools is true", async () => {
+    mockSuccessfulRun();
+    const cfg = {
+      agents: {
+        defaults: {
+          cliBackends: {
+            "claude-cli": {
+              enableTools: true,
+            },
+          },
+        },
+      },
+    } satisfies MrHammadClawConfig;
+    await runCliAgent({
+      sessionId: "s1",
+      sessionFile: "/tmp/session.jsonl",
+      workspaceDir: "/tmp",
+      config: cfg,
+      prompt: "hi",
+      provider: "claude-cli",
+      model: "opus",
+      timeoutMs: 5_000,
+      runId: "run-tools-enabled",
+    });
+    const systemPrompt = extractSystemPromptArg();
+    expect(systemPrompt).toBeDefined();
+    expect(systemPrompt).not.toContain("Tools are disabled in this session");
+  });
+
+  it("includes tools-disabled hint when enableTools is explicitly false", async () => {
+    mockSuccessfulRun();
+    const cfg = {
+      agents: {
+        defaults: {
+          cliBackends: {
+            "claude-cli": {
+              enableTools: false,
+            },
+          },
+        },
+      },
+    } satisfies MrHammadClawConfig;
+    await runCliAgent({
+      sessionId: "s1",
+      sessionFile: "/tmp/session.jsonl",
+      workspaceDir: "/tmp",
+      config: cfg,
+      prompt: "hi",
+      provider: "claude-cli",
+      model: "opus",
+      timeoutMs: 5_000,
+      runId: "run-tools-false",
+    });
+    const systemPrompt = extractSystemPromptArg();
+    expect(systemPrompt).toBeDefined();
+    expect(systemPrompt).toContain("Tools are disabled in this session");
   });
 });
 
